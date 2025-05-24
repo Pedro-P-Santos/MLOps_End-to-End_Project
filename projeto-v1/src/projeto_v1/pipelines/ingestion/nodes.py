@@ -17,7 +17,6 @@ credentials = conf_loader["credentials"]
 logger = logging.getLogger(__name__)
 
 
-
 # INGESTION OF DATA #
 def ingestion(bank_df: pd.DataFrame) -> pd.DataFrame:
     """
