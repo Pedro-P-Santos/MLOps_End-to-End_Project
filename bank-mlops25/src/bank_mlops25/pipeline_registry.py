@@ -5,7 +5,9 @@ from kedro.pipeline import Pipeline, pipeline
 from typing import Dict
 from bank_mlops25.pipelines import (
     data_tests,
-    split_data
+    split_data,
+    preprocess,
+    model_selec
 )
 
 def register_pipelines() -> dict[str, Pipeline]:
@@ -16,9 +18,13 @@ def register_pipelines() -> dict[str, Pipeline]:
     """
     data_tests_pipeline = data_tests.create_pipeline()
     split_data_pipeline = split_data.create_pipeline()
+    preprocess_pipeline=preprocess.create_pipeline()
+    model_selec_pipeliene = model_selec.create_pipeline()
 
     return {
         "data_tests": data_tests_pipeline,
-        "split_data":split_data_pipeline
+        "split_data":split_data_pipeline,
+        "preprocess": preprocess_pipeline,
+        "model_selec": model_selec_pipeliene
 
     }
