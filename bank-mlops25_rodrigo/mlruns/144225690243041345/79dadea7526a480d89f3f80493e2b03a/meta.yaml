@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/rodri/Desktop/Nova%20IMS/1ano/2nd%20Semester/MLOps/git/MLOps_End-to-End_Project/bank-mlops25/mlruns/144225690243041345/79dadea7526a480d89f3f80493e2b03a/artifacts
+end_time: 1748082617211
+entry_point_name: ''
+experiment_id: '144225690243041345'
+lifecycle_stage: active
+run_id: 79dadea7526a480d89f3f80493e2b03a
+run_name: split_data
+run_uuid: 79dadea7526a480d89f3f80493e2b03a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1748082617111
+status: 4
+tags: []
+user_id: rodri

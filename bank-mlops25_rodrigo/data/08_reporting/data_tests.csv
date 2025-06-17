@@ -1,0 +1,5 @@
+Success,Expectation Type,Column,Column Pair,Max Value,Min Value,Element Count,Unexpected Count,Unexpected Percent,Value Set,Unexpected Value,Observed Value
+False,expect_column_values_to_be_between,age,"('', '')",100,18,41188,5,0.012139458094590657,,[],
+True,expect_column_values_to_be_of_type,age,"('', '')",,,,,,,[],int64
+False,expect_column_distinct_values_to_be_in_set,marital,"('', '')",,,,,,"['single', 'married', 'divorced']",[],"['divorced', 'married', 'single', 'unknown']"
+True,expect_column_values_to_be_of_type,marital,"('', '')",,,41188,0,0.0,,[],

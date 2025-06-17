@@ -1,0 +1,186 @@
+{
+  "evaluation_parameters": {},
+  "meta": {
+    "active_batch_definition": {
+      "batch_identifiers": {},
+      "data_asset_name": "bank_data",
+      "data_connector_name": "fluent",
+      "datasource_name": "bank_datasource"
+    },
+    "batch_markers": {
+      "ge_load_time": "20250524T070723.846988Z",
+      "pandas_data_fingerprint": "e18024011a9979ef66c85f1b1ffa3aa3"
+    },
+    "batch_spec": {
+      "batch_data": "PandasDataFrame"
+    },
+    "checkpoint_id": null,
+    "checkpoint_name": "bank_data_checkpoint",
+    "expectation_suite_name": "Bank",
+    "great_expectations_version": "0.18.12",
+    "run_id": {
+      "run_name": null,
+      "run_time": "2025-05-24T08:07:23.823231+01:00"
+    },
+    "validation_id": null,
+    "validation_time": "20250524T070723.875889Z"
+  },
+  "results": [
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "batch_id": "bank_datasource-bank_data",
+          "column": "age",
+          "max_value": 100,
+          "min_value": 18
+        },
+        "meta": {}
+      },
+      "meta": {},
+      "result": {
+        "element_count": 41188,
+        "missing_count": 0,
+        "missing_percent": 0.0,
+        "partial_unexpected_counts": [
+          {
+            "count": 5,
+            "value": 17
+          }
+        ],
+        "partial_unexpected_index_list": [
+          37140,
+          37539,
+          37558,
+          37579,
+          38274
+        ],
+        "partial_unexpected_list": [
+          17,
+          17,
+          17,
+          17,
+          17
+        ],
+        "unexpected_count": 5,
+        "unexpected_percent": 0.012139458094590657,
+        "unexpected_percent_nonmissing": 0.012139458094590657,
+        "unexpected_percent_total": 0.012139458094590657
+      },
+      "success": false
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_be_of_type",
+        "kwargs": {
+          "batch_id": "bank_datasource-bank_data",
+          "column": "age",
+          "type_": "int64"
+        },
+        "meta": {}
+      },
+      "meta": {},
+      "result": {
+        "observed_value": "int64"
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_distinct_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "bank_datasource-bank_data",
+          "column": "marital",
+          "value_set": [
+            "single",
+            "married",
+            "divorced"
+          ]
+        },
+        "meta": {}
+      },
+      "meta": {},
+      "result": {
+        "details": {
+          "value_counts": [
+            {
+              "count": 4612,
+              "value": "divorced"
+            },
+            {
+              "count": 24928,
+              "value": "married"
+            },
+            {
+              "count": 11568,
+              "value": "single"
+            },
+            {
+              "count": 80,
+              "value": "unknown"
+            }
+          ]
+        },
+        "observed_value": [
+          "divorced",
+          "married",
+          "single",
+          "unknown"
+        ]
+      },
+      "success": false
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_be_of_type",
+        "kwargs": {
+          "batch_id": "bank_datasource-bank_data",
+          "column": "marital",
+          "type_": "str"
+        },
+        "meta": {}
+      },
+      "meta": {},
+      "result": {
+        "element_count": 41188,
+        "missing_count": 0,
+        "missing_percent": 0.0,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0,
+        "unexpected_percent_nonmissing": 0.0,
+        "unexpected_percent_total": 0.0
+      },
+      "success": true
+    }
+  ],
+  "statistics": {
+    "evaluated_expectations": 4,
+    "success_percent": 50.0,
+    "successful_expectations": 2,
+    "unsuccessful_expectations": 2
+  },
+  "success": false
+}
