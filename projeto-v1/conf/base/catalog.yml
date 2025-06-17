@@ -16,3 +16,8 @@ ingested_data:
 validated_data:
   type: pandas.CSVDataset
   filepath: data/02_intermediate/validated_data.csv
+
+cleaned_data:
+  type: pandas.ParquetDataSet
+  filepath: data/02_intermediate/cleaned_data.parquet
+
