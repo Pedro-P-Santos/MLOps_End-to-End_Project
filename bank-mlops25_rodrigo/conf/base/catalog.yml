@@ -1,0 +1,80 @@
+# Here you can define all your datasets by using simple YAML syntax.
+#
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://docs.kedro.org/en/stable/data/data_catalog.html
+
+
+bank_data:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/bank-additional-full.csv
+  load_args:
+    sep: ";"
+
+## ------------------ Data Tests pipe ------------------------
+validated_data:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/validated_data.csv
+
+
+reporting_tests:
+  type: pandas.CSVDataset
+  filepath: data/08_reporting/data_tests.csv
+
+## ------------------ Split data pipe ------------------------
+X_train_data:
+  type: pandas.CSVDataset
+  filepath: data/05_model_input/X_train.csv
+
+y_train_data:
+  type: pandas.CSVDataset
+  filepath: data/05_model_input/y_train.csv
+
+X_test_data:
+  type: pandas.CSVDataset
+  filepath: data/05_model_input/X_test.csv
+
+y_test_data:
+  type: pandas.CSVDataset
+  filepath: data/05_model_input/y_test.csv 
+
+## ------------------ preprocess pipe ------------------------
+X_train_preprocessed:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/X_train_preprocessed.csv
+
+X_test_preprocessed:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/X_test_preprocessed.csv
+
+y_train_encoded:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/y_train_encoded.csv
+
+y_test_encoded:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/y_test_encoded.csv
+
+
+## ------------------ model_selec pipe ------------------------
+
+best_model:
+  type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
+  dataset:
+    type: pickle.PickleDataset
+    filepath: data/06_models/best_model.pkl
+
+model_scores:
+  type: kedro_mlflow.io.artifacts.MlflowArtifactDataset
+  dataset:
+    type: json.JSONDataset
+    filepath: data/08_reporting/model_scores.json
+
+# Kedro + MLflow:
+
+# Carrega/salva o ficheiro localmente ✅
+
+# E mais importante:
+# ➕ Regista o ficheiro como artifact na run do MLflow.
+# ➕ Fica disponível no painel do MLflow com botão de download ou preview.
+
+## ------------------ ... ------------------------
