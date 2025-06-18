@@ -3,9 +3,14 @@ from __future__ import annotations
 
 from kedro.framework.project import find_pipelines
 from kedro.pipeline import Pipeline
-from projeto_v1.pipelines import ingestion
-from projeto_v1.pipelines import data_expectations
-from projeto_v1.pipelines import feature_engineering
+
+
+from projeto_v1.pipelines import (
+    ingestion,
+    data_expectations,
+    feature_engineering,
+    feature_store
+)
 
 def register_pipelines() -> dict[str, Pipeline]:
     """Register the project's pipelines.
@@ -17,11 +22,13 @@ def register_pipelines() -> dict[str, Pipeline]:
     ingestion_pipeline = ingestion.create_pipeline()
     data_expectations_pipeline = data_expectations.create_pipeline()
     feature_engineering_pipeline = feature_engineering.create_pipeline()
+    feature_store_pipeline = feature_store.create_pipeline()
 
     return {
         # "__default__": ingestion_pipeline,
         "ingestion": ingestion_pipeline,
         "data_expectations": data_expectations_pipeline,
-        "feature_engineering": feature_engineering_pipeline
+        "feature_engineering": feature_engineering_pipeline,
+        "feature_store": feature_store_pipeline
     }
 

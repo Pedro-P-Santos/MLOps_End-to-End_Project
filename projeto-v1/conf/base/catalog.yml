@@ -9,14 +9,19 @@ bank_data:
     sep: ";"
     encoding: "utf-8-sig"
 
+## ------------------ ingestion pipe ------------------------
 ingested_data:
   type: pandas.CSVDataset
   filepath: data/02_intermediate/ingested_data.csv
 
+## ------------------ data_expectations pipe ----------------
 validated_data:
   type: pandas.CSVDataset
   filepath: data/02_intermediate/validated_data.csv
 
+
+## ------------------ feature_engineering pipe ------------------------
 data_engineered:
   type: pandas.CSVDataset
   filepath: data/03_primary/data_engineered.csv
+  
