@@ -1,1 +1,1 @@
-{"X_train_preprocessed": {"rows": 32950, "columns": 63, "file_size": 8859976}, "X_test_preprocessed": {"rows": 8238, "columns": 63, "file_size": 2215863}, "y_train_encoded": {"rows": 32950, "columns": 1, "file_size": 131804}, "y_test_encoded": {"rows": 8238, "columns": 1, "file_size": 32956}}
+{"bank_data": {"rows": 41188, "columns": 21, "file_size": 5834924}, "bank_data_plus_features": {"rows": 41188, "columns": 30, "file_size": 8346240}}

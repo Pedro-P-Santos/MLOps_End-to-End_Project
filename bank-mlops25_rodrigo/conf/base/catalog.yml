@@ -20,6 +20,13 @@ reporting_tests:
   type: pandas.CSVDataset
   filepath: data/08_reporting/data_tests.csv
 
+
+## ------------------ Feature Engineering Pipe ------------------------
+bank_data_plus_features:
+  type: pandas.CSVDataset
+  filepath: data/04_feature/bank_data_plus_features.csv
+
+
 ## ------------------ Split data pipe ------------------------
 X_train_data:
   type: pandas.CSVDataset
