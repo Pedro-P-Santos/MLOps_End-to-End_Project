@@ -34,6 +34,10 @@ def run_feature_engineering(df: pd.DataFrame) -> pd.DataFrame:
     df_engineered = age_loan_interaction(df_engineered)
     df_engineered = contacted_before(df_engineered)
     df_engineered = employment_rate_interaction(df_engineered)
+    df_engineered = add_loan_risk_features(df_engineered)
+    df_engineered = add_contact_timing_features(df_engineered)
+    df_engineered = add_customer_profile_features(df_engineered)
+    df_engineered = add_macro_and_combo_features(df_engineered)
     
     logger.info("Feature engineering completed.")
     return df_engineered
@@ -163,6 +167,76 @@ def employment_rate_interaction(df: pd.DataFrame) -> pd.DataFrame:
 
     df["emp_rate_x_employed"] = df["emp.var.rate"] * df["nr.employed"]
     return df
+
+
+#-------------------------------------------
+#-------------------------------------------
+#-------------------------------------------
+#-----------------Rodrigo-------------------
+#-------------------------------------------
+#-------------------------------------------
+#-------------------------------------------
+
+def add_loan_risk_features(df: pd.DataFrame) -> pd.DataFrame:
+    """Features relacionadas com risco financeiro e histórico de crédito."""
+    df["has_any_loan"] = df[["loan", "housing"]].isin(["yes"]).any(axis=1).astype(int)
+    
+    df["loan_risk_score"] = (
+        (df["loan"] == "yes").astype(int) +
+        (df["housing"] == "yes").astype(int) +
+        df["default"].astype(int)  # já foi convertido em 0/1 por clean_default
+    )
+    return df
+
+
+def add_contact_timing_features(df: pd.DataFrame) -> pd.DataFrame:
+    """Features relacionadas com o momento do contacto (mês, trimestre, dia da semana)."""
+    month_map = {
+        'jan': 1, 'feb': 2, 'mar': 3, 'apr': 4,
+        'may': 5, 'jun': 6, 'jul': 7, 'aug': 8,
+        'sep': 9, 'oct': 10, 'nov': 11, 'dec': 12
+    }
+    df["contact_month_num"] = df["month"].map(month_map)
+    
+    df["is_summer_contact"] = df["month"].isin(["jun", "jul", "aug"]).astype(int)
+    
+    df["contact_day_priority"] = (df["day_of_week"] == "fri").astype(int)
+    
+    df["contact_month_quarter"] = pd.cut(
+        df["contact_month_num"],
+        bins=[0, 3, 6, 9, 12],
+        labels=["Q1", "Q2", "Q3", "Q4"]
+    ).astype(str)
+    
+    return df
+
+def add_customer_profile_features(df: pd.DataFrame) -> pd.DataFrame:
+    """Features relacionadas com o perfil sociodemográfico e histórico de contacto do cliente."""
+    
+    # Grupos com menos rendimento
+    df["is_student_or_retired"] = df["job"].isin(["student", "retired"]).astype(int)
+    
+    # Sucesso em campanha anterior
+    df["successful_prev_contact"] = (df["poutcome"] == "success").astype(int)
+    
+    # Duração média por contacto (evitar divisão por zero)
+    df["contact_efficiency"] = df["duration"] / (df["campaign"] + 1e-6)
+    
+    return df
+
+
+def add_macro_and_combo_features(df: pd.DataFrame) -> pd.DataFrame:
+    """Features sintéticas baseadas em condições económicas e combinações demográficas."""
+    
+    # Índice sintético de pessimismo e pressão económica
+    df["economic_pressure_index"] = -df["cons.conf.idx"] + df["cons.price.idx"]
+    
+    # Combinação entre estado civil e educação
+    df["marital_edu_combo"] = df["marital"] + "_" + df["education"]
+    
+    return df
+
+
 
 
 '''
