@@ -42,7 +42,7 @@ def feature_engineering(df: pd.DataFrame) -> pd.DataFrame:
         df["has_default_flag"]  # Histórico de incumprimento
     )
 
-    df["balance_flag"] = (df["balance"] > 0).astype(int)  # Saldo médio positivo (proxy de estabilidade financeira)
+    # df["balance_flag"] = (df["balance"] > 0).astype(int)  # Saldo médio positivo (proxy de estabilidade financeira)
 
     # 3. Campanha atual de marketing
     month_map = {

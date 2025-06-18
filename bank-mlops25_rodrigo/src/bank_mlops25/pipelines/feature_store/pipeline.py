@@ -10,7 +10,7 @@ def create_pipeline(**kwargs) -> Pipeline:
     return pipeline([
         node(
             func=upload_to_feature_store,
-            inputs=["bank_data_plus_features", "params:credentials"],
+            inputs="bank_data_plus_features",
             outputs=None,
             name="upload_features_to_store",
         )
