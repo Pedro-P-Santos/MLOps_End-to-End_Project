@@ -23,5 +23,5 @@ validated_data:
 ## ------------------ feature_engineering pipe ------------------------
 data_engineered:
   type: pandas.CSVDataset
-  filepath: data/03_primary/data_engineered.
+  filepath: data/03_primary/data_engineered.csv
   
