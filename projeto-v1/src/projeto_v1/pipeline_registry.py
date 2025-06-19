@@ -10,7 +10,8 @@ from projeto_v1.pipelines import (
     data_expectations,
     feature_engineering,
     feature_store,
-    split_data
+    split_data,
+    basic_pre_processing
 )
 
 def register_pipelines() -> dict[str, Pipeline]:
@@ -25,6 +26,7 @@ def register_pipelines() -> dict[str, Pipeline]:
     feature_engineering_pipeline = feature_engineering.create_pipeline()
     feature_store_pipeline = feature_store.create_pipeline()
     split_data_pipeline = split_data.create_pipeline()
+    basic_pre_processing_pipeline = basic_pre_processing.create_pipeline()
 
     return {
         # "__default__": ingestion_pipeline,
@@ -32,6 +34,7 @@ def register_pipelines() -> dict[str, Pipeline]:
         "data_expectations": data_expectations_pipeline,
         "feature_engineering": feature_engineering_pipeline,
         "feature_store": feature_store_pipeline,
-        "split_data": split_data_pipeline
+        "split_data": split_data_pipeline,
+        "basic_pre_processing": basic_pre_processing_pipeline
     }
 

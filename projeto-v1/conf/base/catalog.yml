@@ -41,3 +41,20 @@ X_test_data:
 y_test_data:
   type: pandas.CSVDataset
   filepath: data/05_model_input/y_test.csv 
+
+## ------------------ preprocess pipe ------------------------
+X_train_preprocessed:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/X_train_preprocessed.csv
+
+X_test_preprocessed:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/X_test_preprocessed.csv
+
+y_train_encoded:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/y_train_encoded.csv
+
+y_test_encoded:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/y_test_encoded.csv
