@@ -1,0 +1,43 @@
+# This is a boilerplate parameters config generated for pipeline 'feature_selection'
+# using Kedro 0.19.5.
+#
+# Documentation for this file format can be found in "Parameters"
+# Link: https://docs.kedro.org/en/0.19.5/configuration/parameters.html
+
+# Generic parameters for the feature_selection pipeline!
+# We do not want to overfit the model so its best to fix parameters and test feature importance equally.
+# Parameters were fixed based on some tests on the notebook feat_selec.ipynb
+
+# xgboost
+model_params_xgb:
+  n_estimators: 50
+  max_depth: 4
+  learning_rate: 0.1
+  random_state: 42
+  n_jobs: -1
+  use_label_encoder: False
+  eval_metric: mlogloss
+
+
+
+
+# BORUTA
+model_params_boruta:
+  n_estimators: 50
+  max_depth: 4
+  random_state: 42
+  learning_rate: 0.1
+  n_jobs: -1
+max_iter_boruta: 100
+
+
+# CHI2
+k_features_chi2: 20
+model_params_chi2:
+  n_jobs: -1
+  random_state: 42
+chi2_p_value_threshold: 0.001
+
+# VARIANCE THRESHOLD
+variance_threshold: 0
+

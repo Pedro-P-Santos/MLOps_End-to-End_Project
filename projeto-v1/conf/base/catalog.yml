@@ -58,3 +58,31 @@ y_train_encoded:
 y_test_encoded:
   type: pandas.CSVDataset
   filepath: data/03_primary/y_test_encoded.csv
+
+
+# ## ------------------ feature_selection pipe ------------------------
+# params:parameters_feature_selection:
+#   type: kedro.extras.datasets.api.YAMLDataSet
+#   filepath: base/parameters_feature_selection.yml
+
+
+rfe_selected_features:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/rfe_selected_features.pkl
+
+chi2_selected_features:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/chi2_selected_features.pkl
+
+boruta_selected_features:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/boruta_selected_features.pkl
+
+variance_threshold_selected_features:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/variance_threshold_selected_features.pkl
+
+### final set of selected features
+final_selected_features:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/final_selected_features.pkl
