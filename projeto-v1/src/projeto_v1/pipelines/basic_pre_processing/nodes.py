@@ -28,25 +28,30 @@ class FrequencyEncoder(BaseEstimator, TransformerMixin):
 
 def preprocess_train_test(X_train: pd.DataFrame, X_test: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
     categorical_high_cardinality = [
-        "job", "education", "month", "campaign_bin", "cci_top_value", "marital_edu_combo"
+        "job", "education", "campaign_bin", "cci_top_value", "marital_edu_combo" #  "month",
     ]   
     categorical_low_cardinality = [
-        "marital", "contact", "day_of_week", "poutcome", "age_binned_quantile", "previous_bin",
-        "cpi_top_value", "euribor_bin", "education_mapped", "contact_day_priority", "contact_month_quarter"
+        "marital", "poutcome", "age_binned_quantile", "previous_bin",
+        "cpi_top_value", "euribor_bin", "education_mapped" # "contact_day_priority" # "contact_month_quarter", "contact", "day_of_week"
     ]
     binary_features = [
         "default", "housing", "loan", "cpi_above_75th", "cci_above_75th",
         "young_housing_loan", "middle_aged_housing_loan", "senior_housing_loan",
         "young_loan", "middle_aged_loan", "senior_loan", "contacted_before",
-        "is_summer_contact", "is_student_or_retired", "successful_prev_contact",
-        "has_any_loan"
+        "is_student_or_retired", "successful_prev_contact",
+        "has_any_loan" # "is_summer_contact", 
     ]
     numeric_features = [
-        "age", "duration", "campaign", "pdays", "previous", "emp.var.rate",
+        "age", "campaign", "pdays", "previous", "emp.var.rate",
         "cons.price.idx", "cons.conf.idx", "euribor3m", "nr.employed",
-        "emp_rate_x_employed", "loan_risk_score", "contact_month_num",
-        "contact_efficiency", "economic_pressure_index"
+        "emp_rate_x_employed", "loan_risk_score",
+        "economic_pressure_index" # "duration", "contact_efficiency", "contact_month_num",
     ]
+
+    features_to_drop = ["duration", "contact_efficiency", "contact", "month", "day_of_week"]
+    features_to_drop = [f for f in features_to_drop if f in X_train.columns]
+    X_train = X_train.drop(columns=features_to_drop)
+    X_test = X_test.drop(columns=features_to_drop)
 
     # Binary columns: treat 'unknown', 'yes', 'no'
     for col in binary_features:
