@@ -11,12 +11,12 @@ def create_pipeline(**kwargs) -> Pipeline:
         node(
             func=run_all_feature_selection_methods,
             inputs=["X_train_preprocessed", "y_train_encoded", "params:parameters_feature_selection"],
-            outputs={
-                "rfe_selected_features": "rfe_selected_features",
-                "chi2_selected_features": "chi2_selected_features",
-                "boruta_selected_features": "boruta_selected_features",
-                "variance_threshold_selected_features": "variance_threshold_selected_features",
-            },
+            outputs=[
+                "rfe_selected_features",
+                "chi2_selected_features",
+                "boruta_selected_features",
+                "variance_threshold_selected_features",
+            ],
             name="run_all_feature_selection_methods_node",
         ),
     ])

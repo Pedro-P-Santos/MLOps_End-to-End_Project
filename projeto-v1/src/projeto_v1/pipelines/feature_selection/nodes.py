@@ -3,13 +3,18 @@ This is a boilerplate pipeline 'feature_selection'
 generated using Kedro 0.19.5
 """
 import logging
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Tuple
 import pandas as pd
 from sklearn.feature_selection import RFE
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import f1_score
 import numpy as np
 from sklearn.model_selection import train_test_split
+try:
+    from xgboost import XGBClassifier
+except ImportError:
+    raise ImportError("XGBoost is not installed. Please install it using 'pip install xgboost'.")
+
 
 try: 
     from boruta import BorutaPy
@@ -27,7 +32,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def run_all_feature_selection_methods(X_train_preprocessed: pd.DataFrame, y_train_encoded: pd.DataFrame, params: Dict[str, Any]) -> List[str]:
+def run_all_feature_selection_methods(X_train_preprocessed: pd.DataFrame, y_train_encoded: pd.DataFrame, params: Dict[str, Any]) -> Tuple[List[str], List[str], List[str], List[str]]:
     """
     Orchestrates the execution of multiple feature selection techniques and returns selected feature names.
     """
@@ -37,71 +42,77 @@ def run_all_feature_selection_methods(X_train_preprocessed: pd.DataFrame, y_trai
     # Step 1: Remove known benchmark features before any selection
     X_cleaned = remove_benchmark_features(X_train_preprocessed)
 
-    results = {}
-
-    if "model_params_rfe" in params:
-        results["rfe"] = feature_selection_rfe(X_cleaned, y_train_encoded, params)
-    if "k_features_chi2" in params:
-        results["chi2"] = feature_selection_chi2(X_cleaned, y_train_encoded, params)
-    if "model_params_boruta" in params:
-        results["boruta"] = feature_selection_boruta(X_cleaned, y_train_encoded, params)
-    if "variance_threshold" in params:
-        results["variance_threshold"] = feature_selection_variance_threshold(X_cleaned, y_train_encoded, params)
-
-    return results
-
-
-
-
-
-def feature_selection_rfe(X: pd.DataFrame, y: pd.Series, params: Dict) -> List[str]:
-    logger = logging.getLogger(__name__)
-
-    model_params = params["model_params_rfe"]
-    n_features_list = params["n_features_rfe"]
-    best_score = 0.0
-    best_features_rfe = []
-
+    # Run each method individually and return in order
+    rfe_selected_features = feature_selection_rfe(X_cleaned, y_train_encoded, params) \
+        if "model_params_xgb" in params else []
     
+    chi2_selected_features = feature_selection_chi2(X_cleaned, y_train_encoded, params) \
+        if "k_features_chi2" in params else []
+    
+    boruta_selected_features = feature_selection_boruta(X_cleaned, y_train_encoded, params) \
+        if "model_params_boruta" in params else []
+    
+    variance_threshold_selected_features = feature_selection_variance_threshold(X_cleaned, y_train_encoded, params) \
+        if "variance_threshold" in params else []
+
+    return (
+        rfe_selected_features,
+        chi2_selected_features,
+        boruta_selected_features,
+        variance_threshold_selected_features
+    )
+
+
+
+
+def feature_selection_rfe(X: pd.DataFrame, y: pd.Series, params: Dict[str, Any]) -> List[str]:
+    logger = logging.getLogger(__name__)
+    logger.info("🔍 Starting RFE with XGBoost over all feature sizes")
+
+    model_params = params["model_params_xgb"]
     y = np.ravel(y)
 
-    # Validation split within training data
     X_train_split, X_val_split, y_train_split, y_val_split = train_test_split(
         X, y, test_size=0.2, random_state=42, stratify=y
     )
+    
+    total_features = X.shape[1]
+    feature_names = X.columns
 
-    for n in n_features_list:
-        logger.info(f"Evaluating RFE with top {n} features")
+    best_score = 0.0
+    best_features = []
+    best_n_features = 0
 
-        base_model = RandomForestClassifier(**model_params)
-        rfe = RFE(estimator=base_model, n_features_to_select=n)
+    for n in range(1, total_features + 1):
+        logger.info(f"Testing RFE with {n} features")
+
+        model = XGBClassifier(**model_params, verbosity=0)
+        rfe = RFE(estimator=model, n_features_to_select=n, step=0.2)
         rfe.fit(X_train_split, y_train_split)
 
-        selected_features = X.columns[rfe.support_].tolist()
-        logger.info(f"Selected features: {selected_features}")
-        assert isinstance(selected_features, list), "Selected features should be a list"
+        rfe_selected_features = feature_names[rfe.support_].tolist()
+        assert isinstance(rfe_selected_features, list), "Selected features should be a list"
 
-        # Retrain model only on selected features
-        model = RandomForestClassifier(**model_params)
-        model.fit(X_train_split[selected_features], y_train_split)
-
-        y_train_pred = model.predict(X_train_split[selected_features])
+        model.fit(X_train_split[rfe_selected_features], y_train_split)
+        y_train_pred = model.predict(X_train_split[rfe_selected_features])
         assert isinstance(y_train_pred, np.ndarray), "y_train_pred should be a numpy array"
-        y_val_pred = model.predict(X_val_split[selected_features])
+        y_val_pred = model.predict(X_val_split[rfe_selected_features])
         assert isinstance(y_val_pred, np.ndarray), "y_val_pred should be a numpy array"
 
         train_f1 = f1_score(y_train_split, y_train_pred, average="macro")
         val_f1 = f1_score(y_val_split, y_val_pred, average="macro")
-        gap_check = abs(train_f1 - val_f1)
+        gap = abs(train_f1 - val_f1)
 
-        logger.info(f"Train f1_macro: {train_f1:.4f} | Val f1_macro: {val_f1:.4f} | 🔍 Gap: {gap_check:.4f}")
+        logger.info(f"Train F1: {train_f1:.4f}, Val F1: {val_f1:.4f}, Gap: {gap:.4f}")
 
         if val_f1 > best_score:
             best_score = val_f1
-            best_features_rfe = selected_features
-            logger.info(f"New best model with {n} features selected")
+            best_features_rfe = rfe_selected_features
+            best_n_features = n
+            logger.info(f"✅ New best model with {n} features")
 
-    logger.info(f"🎯 Best val f1_macro: {best_score:.4f} with {len(best_features_rfe)} features")
+    logger.info(f"🎯 Best validation F1: {best_score:.4f} using {best_n_features} features")
+    logger.info(f"Selected features: {best_features_rfe}")
     assert isinstance(best_features_rfe, list), "Selected features should be a list"
 
     return best_features_rfe
@@ -116,10 +127,10 @@ def feature_selection_boruta(X: pd.DataFrame, y: pd.Series, params: Dict) -> Lis
     model_params = params["model_params_boruta"]
     max_iter = params["max_iter_boruta"]
 
-    rf = RandomForestClassifier(**model_params)
+    xgb = XGBClassifier(**model_params)
 
     boruta_selector = BorutaPy(
-        estimator=rf,
+        estimator=xgb,
         n_estimators='auto',
         max_iter=max_iter,
         random_state=42
@@ -154,6 +165,7 @@ def feature_selection_chi2(X: pd.DataFrame, y: pd.Series, params: Dict) -> List[
     logger.info("Starting Chi-squared feature selection")
 
     significance_threshold = params["chi2_p_value_threshold"]
+    logger.info(f"Using Chi-squared with significance threshold: {significance_threshold}")
 
     # categorical_columns = [
     #     "job", "marital", "education", "contact", "month", "day_of_week",
@@ -194,6 +206,7 @@ def feature_selection_variance_threshold(X: pd.DataFrame, y: pd.Series, params: 
     
     # --- Variance Threshold Feature Selection ---
     selector = VarianceThreshold(threshold=threshold)
+    logger.info(f"Using VarianceThreshold with threshold: {threshold}")
     selector.fit(X)
 
     selected_features_var = X.columns[selector.get_support()].tolist()
@@ -217,8 +230,9 @@ def remove_benchmark_features(X: pd.DataFrame) -> pd.DataFrame:
     ]
 
     logger.info(f"Removing benchmark features: {benchmark_features}")
-
     X_cleaned = X.drop(columns=benchmark_features, errors='ignore')
+    assert all(col not in X_cleaned.columns for col in benchmark_features), "Some benchmark features were not removed correctly"
+
 
     logger.info(f"Remaining features after removal: {X_cleaned.columns.tolist()}")
 
