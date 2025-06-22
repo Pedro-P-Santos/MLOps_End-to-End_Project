@@ -82,3 +82,8 @@ ignore = ["E501"]  # Ruff format takes care of line-too-long
 
 [tool.kedro_telemetry]
 project_id = "3e515bb9cb494d588dcfc8e2d9468726"
+
+[tool.uv.workspace]
+members = [
+    "project_v1",
+]

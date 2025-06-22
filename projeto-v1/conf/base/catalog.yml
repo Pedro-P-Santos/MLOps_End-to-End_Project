@@ -19,5 +19,5 @@ validated_data:
 
 cleaned_data:
   type: pandas.ParquetDataSet
-  filepath: data/02_intermediate/cleaned_data.parquet
+  filepath: data/02_intermediate/cleaned_data.csv
 
