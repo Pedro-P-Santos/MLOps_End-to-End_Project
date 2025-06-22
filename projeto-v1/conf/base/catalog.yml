@@ -66,21 +66,21 @@ y_test_encoded:
 #   filepath: base/parameters_feature_selection.yml
 
 
-# rfe_selected_features:
-#   type: pickle.PickleDataSet
-#   filepath: data/04_feature/rfe_selected_features.pkl
+rfe_selected_features:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/rfe_selected_features.pkl
 
-# chi2_selected_features:
-#   type: pickle.PickleDataSet
-#   filepath: data/04_feature/chi2_selected_features.pkl
+chi2_selected_features:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/chi2_selected_features.pkl
 
-# boruta_selected_features:
-#   type: pickle.PickleDataSet
-#   filepath: data/04_feature/boruta_selected_features.pkl
+boruta_selected_features:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/boruta_selected_features.pkl
 
-# variance_threshold_selected_features:
-#   type: pickle.PickleDataSet
-#   filepath: data/04_feature/variance_threshold_selected_features.pkl
+variance_threshold_selected_features:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/variance_threshold_selected_features.pkl
 
 ## final set of selected features
 final_selected_features:

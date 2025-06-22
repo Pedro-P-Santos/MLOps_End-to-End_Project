@@ -1,2 +1,4 @@
-run_name: "model_selection_experiments"
+
+run_name: "Model_Selection: Tuned - GridSeatch"
 random_state: 2021
+model_registry_name: "bank_churn_model: Modelo Tuned com grid"
