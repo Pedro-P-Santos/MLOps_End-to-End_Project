@@ -12,7 +12,8 @@ from projeto_v1.pipelines import (
     # feature_store,
     split_data,
     basic_pre_processing,
-    feature_selection
+    feature_selection,
+    model_development_selection
 )
 
 def register_pipelines() -> dict[str, Pipeline]:
@@ -29,6 +30,7 @@ def register_pipelines() -> dict[str, Pipeline]:
     split_data_pipeline = split_data.create_pipeline()
     basic_pre_processing_pipeline = basic_pre_processing.create_pipeline()
     feature_selection_pipeline = feature_selection.create_pipeline()
+    model_development_selection_pipeline=model_development_selection.create_pipeline()
 
     return {
         # "__default__": ingestion_pipeline,
@@ -38,6 +40,7 @@ def register_pipelines() -> dict[str, Pipeline]:
         # "feature_store": feature_store_pipeline,
         "split_data": split_data_pipeline,
         "basic_pre_processing": basic_pre_processing_pipeline,
-        "feature_selection": feature_selection_pipeline
+        "feature_selection": feature_selection_pipeline,
+        "model_development_selection":model_development_selection_pipeline
     }
 
