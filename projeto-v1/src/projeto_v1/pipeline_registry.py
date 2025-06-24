@@ -14,7 +14,8 @@ from projeto_v1.pipelines import (
     basic_pre_processing,
     feature_selection,
     model_development_selection,
-    model_train
+    model_train,
+    model_predict
 )
 
 def register_pipelines() -> dict[str, Pipeline]:
@@ -33,6 +34,7 @@ def register_pipelines() -> dict[str, Pipeline]:
     feature_selection_pipeline = feature_selection.create_pipeline()
     model_development_selection_pipeline=model_development_selection.create_pipeline()
     model_train_pipeline = model_train.create_pipeline()
+    model_predict_pipeline = model_predict.create_pipeline()
 
     return {
         # "__default__": ingestion_pipeline,
@@ -44,6 +46,7 @@ def register_pipelines() -> dict[str, Pipeline]:
         "basic_pre_processing": basic_pre_processing_pipeline,
         "feature_selection": feature_selection_pipeline,
         "model_development_selection":model_development_selection_pipeline,
-        "model_train": model_train_pipeline
+        "model_train": model_train_pipeline,
+        "model_predict": model_predict_pipeline
     }
 
