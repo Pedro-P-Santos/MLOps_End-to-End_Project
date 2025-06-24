@@ -32,7 +32,7 @@ def model_predict(
     # Summarize predictions
     describe_serving = predictions.describe().to_dict()
 
-    logger.info("✅ Predictions created successfully.")
+    logger.info(" Predictions created successfully.")
     logger.info(f"# of predictions: {len(y_pred)}")
 
     return predictions, describe_serving

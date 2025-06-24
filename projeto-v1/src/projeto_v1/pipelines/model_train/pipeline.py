@@ -18,7 +18,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                 "parameters_model_train",
                 "final_selected_features"
             ],
-            outputs=["champion_model", "champion_results"],
+            outputs=["trained_model", "champion_results"],
             name="train_champion_model"
         )
     ])

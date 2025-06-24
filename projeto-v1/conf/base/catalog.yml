@@ -148,3 +148,14 @@ parameters_model_train:
 trained_model:
   type: pickle.PickleDataSet
   filepath: data/06_models/champion_model_trained.pkl
+
+## ------------------  model_predict pipe ------------------------
+predictions_df:
+  type: pandas.CSVDataSet
+  filepath: data/07_model_output/predictions.csv
+  save_args:
+    index: False
+
+predictions_stats:
+  type: json.JSONDataSet
+  filepath: data/07_model_output/predictions_stats.json
