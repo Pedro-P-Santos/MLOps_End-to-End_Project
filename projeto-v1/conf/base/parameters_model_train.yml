@@ -1,0 +1,11 @@
+# This is a boilerplate parameters config generated for pipeline 'model_train'
+# using Kedro 0.19.5.
+#
+# Documentation for this file format can be found in "Parameters"
+# Link: https://docs.kedro.org/en/0.19.5/configuration/parameters.html
+
+run_name_train: "Model_train: CHAMPION"
+experiment_name_train: "Champion-Model: Training"
+random_state_train: 2021
+model_registry_name_train: bank_churn_model_CHAMPION
+
