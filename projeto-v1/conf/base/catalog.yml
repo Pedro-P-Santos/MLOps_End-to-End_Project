@@ -128,3 +128,11 @@ parameters_grid:
   type: yaml.YAMLDataset
   filepath: conf/base/parameters_grid.yml
 
+
+X_train_scaled:
+  type: pandas.CSVDataset
+  filepath: data/05_model_input/X_train_scaled.csv
+
+X_test_scaled:
+  type: pandas.CSVDataset
+  filepath: data/05_model_input/X_test_scaled.csv

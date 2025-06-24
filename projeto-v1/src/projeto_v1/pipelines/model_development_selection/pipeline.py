@@ -19,7 +19,12 @@ def create_pipeline(**kwargs) -> Pipeline:
                 "parameters_model_selection",
                 "parameters_grid"
             ],
-            outputs="champion_model",
+            outputs=[
+                "champion_model",
+                "X_train_scaled",
+                "X_test_scaled"
+            ],
             name="model_selection_node"
         )
     ])
+
