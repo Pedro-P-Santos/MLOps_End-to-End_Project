@@ -33,7 +33,15 @@ def register_pipelines() -> dict[str, Pipeline]:
     model_development_selection_pipeline=model_development_selection.create_pipeline()
 
     return {
-        # "__default__": ingestion_pipeline,
+        "__default__": (
+            ingestion_pipeline
+            + data_expectations_pipeline
+            + feature_engineering_pipeline
+            + split_data_pipeline
+            + basic_pre_processing_pipeline
+            + feature_selection_pipeline
+            + model_development_selection_pipeline
+        ),
         "ingestion": ingestion_pipeline,
         "data_expectations": data_expectations_pipeline,
         "feature_engineering": feature_engineering_pipeline,
