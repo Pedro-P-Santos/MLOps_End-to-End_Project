@@ -144,3 +144,7 @@ champion_results:
 parameters_model_train:
   type: yaml.YAMLDataset
   filepath: conf/base/parameters_model_train.yml
+
+trained_model:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/champion_model_trained.pkl
