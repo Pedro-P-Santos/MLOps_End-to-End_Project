@@ -115,18 +115,56 @@ final_selected_features:
 
 ## ------------------  model_development_selection pipe ------------------------
 
-parameters_model_selection:
-  type: yaml.YAMLDataset
-  filepath: conf/base/parameters_model_selection.yml
+# parameters_model_selection:
+#   type: yaml.YAMLDataset
+#   filepath: conf/base/parameters_model_selection.yml
 
+# # champion_model:
+# #   type: pickle.PickleDataset
+# #   filepath: data/06_models/champion_model.pkl
+
+# # champion_metrics:
+# #   type: pandas.CSVDataset
+# #   filepath: data/07_model_output/champion_metrics.csv
+# champion_model:
+#   type: pickle.PickleDataset
+#   filepath: data/06_models/champion_model.pkl
+
+# champion_metrics:
+#   type: pandas.CSVDataset
+#   filepath: data/07_model_output/champion_metrics.csv
+
+# champion_tags:
+#   type: MemoryDataset
+
+# champion_description:
+#   type: MemoryDataset
+
+
+# parameters_grid:
+#   type: yaml.YAMLDataset
+#   filepath: conf/base/parameters_grid.yml
+
+# X_train_scaled:
+#   type: pandas.CSVDataset
+#   filepath: data/05_model_input/X_train_scaled.csv
+
+# X_test_scaled:
+#   type: pandas.CSVDataset
+#   filepath: data/05_model_input/X_test_scaled.csv
 
 champion_model:
   type: pickle.PickleDataset
   filepath: data/06_models/champion_model.pkl
 
+parameters_model_selection:
+  type: yaml.YAMLDataset
+  filepath: conf/base/parameters_model_selection.yml
+
 parameters_grid:
   type: yaml.YAMLDataset
   filepath: conf/base/parameters_grid.yml
+
 
 X_train_scaled:
   type: pandas.CSVDataset
@@ -136,9 +174,10 @@ X_test_scaled:
   type: pandas.CSVDataset
   filepath: data/05_model_input/X_test_scaled.csv
 
+
 ## ------------------  model_Train pipe ------------------------
 champion_results:
-  type: json.JSONDataSet
+  type: json.JSONDataset
   filepath: data/08_reporting/champion_results.json
 
 parameters_model_train:
@@ -146,16 +185,16 @@ parameters_model_train:
   filepath: conf/base/parameters_model_train.yml
 
 trained_model:
-  type: pickle.PickleDataSet
+  type: pickle.PickleDataset
   filepath: data/06_models/champion_model_trained.pkl
 
 ## ------------------  model_predict pipe ------------------------
 predictions_df:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/07_model_output/predictions.csv
   save_args:
     index: False
 
 predictions_stats:
-  type: json.JSONDataSet
+  type: json.JSONDataset
   filepath: data/07_model_output/predictions_stats.json

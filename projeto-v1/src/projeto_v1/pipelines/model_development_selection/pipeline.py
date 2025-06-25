@@ -4,27 +4,48 @@ generated using Kedro 0.19.12
 """
 
 from kedro.pipeline import Pipeline, node, pipeline
+# from .nodes import model_selection, register_champion_model
+
+# def create_pipeline(**kwargs) -> Pipeline:
+#     return pipeline([
+#         node(
+#             func=model_selection,
+#             inputs=[
+#                 "X_train_preprocessed",
+#                 "X_test_preprocessed",
+#                 "y_train_encoded",
+#                 "y_test_encoded",
+#                 "final_selected_features",
+#                 "parameters_model_selection",
+#                 "parameters_grid"
+#             ],
+#             outputs=[
+#                 "champion_model",
+#                 "X_train_scaled",
+#                 "X_test_scaled"
+#             ],
+#             name="model_selection_node"
+#         )
+#     ])
+
+
+
+
+from kedro.pipeline import Pipeline, node
 from .nodes import model_selection
 
-def create_pipeline(**kwargs) -> Pipeline:
-    return pipeline([
+
+def create_pipeline(**kwargs):
+    return Pipeline([
         node(
             func=model_selection,
             inputs=[
-                "X_train_preprocessed",
-                "X_test_preprocessed",
-                "y_train_encoded",
-                "y_test_encoded",
-                "final_selected_features",
-                "parameters_model_selection",
-                "parameters_grid"
+                "X_train_preprocessed", "X_test_preprocessed", "y_train_encoded", "y_test_encoded",
+                "parameters_model_selection", "parameters_grid"
             ],
-            outputs=[
-                "champion_model",
-                "X_train_scaled",
-                "X_test_scaled"
-            ],
+            outputs="champion_model",
             name="model_selection_node"
         )
     ])
+
 

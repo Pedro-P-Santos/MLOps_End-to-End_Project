@@ -1,4 +1,4 @@
-
 run_name: "Model_Selection: OPTUNA"
 random_state: 2021
 model_registry_name: bank_churn_model_best_optuna
+mlflow_experiment_name: "models"
