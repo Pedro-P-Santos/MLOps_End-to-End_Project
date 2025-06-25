@@ -16,6 +16,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                 "chi2_selected_features",
                 "boruta_selected_features",
                 "variance_threshold_selected_features",
+                "final_selected_features"
             ],
             name="run_all_feature_selection_methods_node",
         ),

@@ -32,7 +32,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def run_all_feature_selection_methods(X_train_preprocessed: pd.DataFrame, y_train_encoded: pd.DataFrame, params: Dict[str, Any]) -> Tuple[List[str], List[str], List[str], List[str]]:
+def run_all_feature_selection_methods(X_train_preprocessed: pd.DataFrame, y_train_encoded: pd.DataFrame, params: Dict[str, Any]) -> Tuple[List[str], List[str], List[str], List[str], List[str]]:
     """
     Orchestrates the execution of multiple feature selection techniques and returns selected feature names.
     """
@@ -55,11 +55,61 @@ def run_all_feature_selection_methods(X_train_preprocessed: pd.DataFrame, y_trai
     variance_threshold_selected_features = feature_selection_variance_threshold(X_cleaned, y_train_encoded, params) \
         if "variance_threshold" in params else []
 
+    ### FROM NOTEBOOK ANALYSIS!!
+    final_selected_features = ['is_student_or_retired',
+        'cpi_top_value_92.893',
+        'poutcome_success',
+        'cci_top_value',
+        'marital_single',
+        'previous_bin_1',
+        'age',
+        'age_binned_quantile_0.0',
+        'education_mapped_basic_education',
+        'poutcome_nonexistent',
+        'middle_aged_housing_loan',
+        'previous_bin_0',
+        'previous',
+        'euribor_bin_high',
+        'emp.var.rate',
+        'age_binned_quantile_4.0',
+        'cpi_top_value_93.994',
+        'cpi_top_value_93.918',
+        'euribor_bin_very_high',
+        'loan_risk_score',
+        'nr.employed',
+        'education_mapped_higher_education',
+        'cons.conf.idx',
+        'pdays',
+        'successful_prev_contact',
+        'senior_loan',
+        'age_binned_quantile_2.0',
+        'senior_housing_loan',
+        'cci_above_75th',
+        'young_housing_loan',
+        'euribor_bin_very_low',
+        'young_loan',
+        'middle_aged_loan',
+        'contacted_before',
+        'default',
+        'euribor_bin_low',
+        'age_binned_quantile_3.0',
+        'campaign',
+        'cpi_above_75th',
+        'previous_bin_3',
+        'poutcome_failure',
+        'marital_married',
+        'euribor3m',
+        'economic_pressure_index',
+        'previous_bin_2',
+        'cons.price.idx',
+        'cpi_top_value_other']
+
     return (
         rfe_selected_features,
         chi2_selected_features,
         boruta_selected_features,
-        variance_threshold_selected_features
+        variance_threshold_selected_features,
+        final_selected_features
     )
 
 
