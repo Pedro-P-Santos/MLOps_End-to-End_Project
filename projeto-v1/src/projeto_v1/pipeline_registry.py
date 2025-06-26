@@ -7,6 +7,7 @@ from kedro.pipeline import Pipeline
 from projeto_v1.pipelines import (
     ingestion,
     data_expectations,
+    data_cleaning,
     feature_engineering,
     feature_store,
     split_data,
@@ -26,6 +27,7 @@ def register_pipelines() -> dict[str, Pipeline]:
 
     ingestion_pipeline = ingestion.create_pipeline()
     data_expectations_pipeline = data_expectations.create_pipeline()
+    data_cleaning_pipeline = data_cleaning.create_pipeline()
     feature_engineering_pipeline = feature_engineering.create_pipeline()
     feature_store_pipeline = feature_store.create_pipeline()
     split_data_pipeline = split_data.create_pipeline()
@@ -39,6 +41,7 @@ def register_pipelines() -> dict[str, Pipeline]:
         "__default__": (
             ingestion_pipeline
             + data_expectations_pipeline
+            + data_cleaning_pipeline
             + feature_engineering_pipeline
             + feature_store_pipeline          
             + split_data_pipeline
@@ -50,6 +53,7 @@ def register_pipelines() -> dict[str, Pipeline]:
         ),
         "ingestion": ingestion_pipeline,
         "data_expectations": data_expectations_pipeline,
+        "data_cleaning": data_cleaning_pipeline,
         "feature_engineering": feature_engineering_pipeline,
         "feature_store": feature_store_pipeline,
         "split_data": split_data_pipeline,

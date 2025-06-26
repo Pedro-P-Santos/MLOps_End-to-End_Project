@@ -6,7 +6,7 @@ def create_pipeline(**kwargs) -> Pipeline:
         node(
             func=clean_bank_data,
             inputs=["ingested_data", "params:data_cleaning_config"],
-            outputs="leaned_data.csv",  # This is the output that will be used in the next pipeline
+            outputs="cleaned_data.csv",  # This is the output that will be used in the next pipeline
             name="clean_bank_data_node"       # This is the name of the node in the pipeline
         )
     ])
