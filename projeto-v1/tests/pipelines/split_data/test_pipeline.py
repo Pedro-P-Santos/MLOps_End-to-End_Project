@@ -11,7 +11,7 @@ import pandas as pd
 from pathlib import Path
 from src.projeto_v1.pipelines.split_data.nodes import split_data
 
-X_train, X_test, y_train, y_test, columns = split_data(pd.read_csv(Path("03_primary/data_engineered.csv")))
+X_train, X_test, y_train, y_test, columns = split_data(pd.read_csv(Path("data/03_primary/data_engineered.csv")))
 
 def test_split_data_shapes_match():
     assert X_train.shape[0] == y_train.shape[0], "Mismatch in X_train and y_train rows"
