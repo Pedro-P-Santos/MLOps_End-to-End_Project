@@ -19,6 +19,10 @@ validated_data:
   type: pandas.CSVDataset
   filepath: data/02_intermediate/validated_data.csv
 
+## ------------------ data_cleaning pipe ----------------
+cleaned_data:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/cleaned_data.csv
 
 ## ------------------ feature_engineering pipe ------------------------
 data_engineered:
@@ -198,3 +202,4 @@ predictions_df:
 predictions_stats:
   type: json.JSONDataset
   filepath: data/07_model_output/predictions_stats.json
+
