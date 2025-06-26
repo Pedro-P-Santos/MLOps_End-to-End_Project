@@ -18,7 +18,8 @@ def model_predict(
         selected_features: list
 ) -> Tuple[pd.DataFrame, Dict[str, Any]]:
     """Predict using the trained model and return predictions and summary."""
-
+    
+    logger.info("start")
     # Use only the selected features
     X_input = X[selected_features]
 
