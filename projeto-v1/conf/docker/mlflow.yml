@@ -1,0 +1,36 @@
+server:
+  mlflow_tracking_uri: "http://host.docker.internal:8080"  # Corrigido para Docker
+  mlflow_registry_uri: "http://host.docker.internal:8080"
+  credentials: null
+  request_header_provider:
+    type: null
+    pass_context: False
+    init_kwargs: {}
+
+tracking:
+  disable_tracking:
+    disable_autologging: True
+    pipelines: []
+
+  experiment:
+    name: projeto_v1
+    create_experiment_kwargs:
+      artifact_location: "/ml_artifacts"  # Novo: garante que o modelo não tenta escrever em C:/
+      tags: null
+    restore_if_deleted: True
+
+  run:
+    id: null
+    name: null
+    nested: True
+
+  params:
+    dict_params:
+      flatten: False
+      recursive: True
+      sep: "."
+    long_params_strategy: fail
+
+ui:
+  port: "8080"
+  host: "127.0.0.1"

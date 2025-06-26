@@ -14,4 +14,4 @@ services:
       - ./data:/home/kedro_docker/data
       - ./ml_artifacts:/ml_artifacts
     command: >
-      kedro run
+      kedro run --env docker
