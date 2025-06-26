@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  kedro-pipeline:
+    build:
+      context: .
+      dockerfile: Dockerfile  
+    environment:
+      - FS_API_KEY=${FS_API_KEY}
+      - FS_PROJECT_NAME=${FS_PROJECT_NAME}
+      - MLFLOW_TRACKING_URI=http://host.docker.internal:8080
+      - MLFLOW_ARTIFACT_ROOT=/ml_artifacts
+    volumes:
+      - ./data:/home/kedro_docker/data
+      - ./ml_artifacts:/ml_artifacts
+    command: >
+      kedro run

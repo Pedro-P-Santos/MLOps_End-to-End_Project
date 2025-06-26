@@ -486,10 +486,6 @@
 #     return model, results
 
 
-"""
-This is a boilerplate pipeline 'model_train'
-generated using Kedro 0.19.5
-"""
 import pandas as pd
 import logging
 from typing import Dict, Tuple, Any
@@ -515,7 +511,8 @@ def model_train(
         parameters_model_train: Dict[str, Any],
         final_selected_features: list,
 ):
-    # ---------------- SETUP EXPERIMENT ----------------
+
+    # ---------------- SETUP EXPERIMENTO ----------------
     with open("conf/local/mlflow.yml", "r") as f:
         mlflow_config = yaml.load(f, Loader=yaml.SafeLoader)
     mlflow.set_tracking_uri(mlflow_config["server"]["mlflow_tracking_uri"])
@@ -526,13 +523,13 @@ def model_train(
 
     run_name = parameters_model_train["run_name_train"]
 
-    # ---------------- AUTOLOGGING ----------------
+    # ---------------- AUTOLOG ----------------
     mlflow.sklearn.autolog(log_model_signatures=True, log_input_examples=True)
 
     logger.info(f"Starting MLFlow run {run_name}")
     with mlflow.start_run(experiment_id=experiment_id, run_name=run_name, nested=True):
 
-        # ---------------- LOAD MODEL ----------------
+        # ---------------- LOAD CHAMPION MODEL ----------------
         try:
             with open(os.path.join(os.getcwd(), "data", "06_models", "champion_model.pkl"), "rb") as f:
                 champ_model = pickle.load(f)
@@ -547,7 +544,7 @@ def model_train(
         y_train_encoded = np.ravel(y_train_encoded)
         y_test_encoded = np.ravel(y_test_encoded)
 
-        # ---------------- TRAIN ----------------
+        # ---------------- TRAINING ----------------
         model = champ_model.fit(X_train_scaled, y_train_encoded)
         y_train_pred = model.predict(X_train_scaled)
         y_test_pred = model.predict(X_test_scaled)
@@ -570,7 +567,6 @@ def model_train(
         mlflow.log_metric("Precision-Train", precision_train)
         mlflow.log_metric("Precision-Test", precision_test)
 
-        # ---------------- RESULTS DICT ----------------
         results = {
             "classifier": champ_model.__class__.__name__,
             "F1_Macro-Train": f1_macro_train,
@@ -582,7 +578,7 @@ def model_train(
             "Precision-Test": precision_test,
         }
 
-        # ---------------- MODEL REGISTRY ----------------
+        # ---------------- REGISTO EM MLFLOW ----------------
         run_id = mlflow.active_run().info.run_id
         model_uri = f"runs:/{run_id}/model"
         registered_model_name = parameters_model_train["model_registry_name_train"]
@@ -617,25 +613,23 @@ def model_train(
         else:
             X_sample = X_sample[final_selected_features]
 
-        explainer_shap = shap.TreeExplainer(model)
-        shap_values = explainer_shap.shap_values(X_sample)
-        shap.initjs()
+        explainer = shap.TreeExplainer(model)
+        shap_values = explainer(X_sample)
 
-        if isinstance(shap_values, list):
-            for i, class_values in enumerate(shap_values):
-                fig = plt.figure()
-                shap.summary_plot(class_values, X_sample, feature_names=X_sample.columns, show=False)
-                path = f"data/08_reporting/shap_summary_class_{i}.png"
-                plt.savefig(path)
-                mlflow.log_artifact(path)
-                plt.close()
-        else:
-            fig = plt.figure()
-            shap.summary_plot(shap_values, X_sample, feature_names=X_sample.columns, show=False)
+        shap.initjs()
+        try:
+            # Explicação da classe 1 (podes trocar o índice da classe consoante o interesse)
+            # Estamos a perguntar: quais foram as features que mais contribuíram para prever a classe 1, e de que forma?
+
+            plt.figure()
+            shap.summary_plot(shap_values.values[:, :, 1], X_sample, feature_names=X_sample.columns, show=False)
             path = "data/08_reporting/shap_summary.png"
-            plt.savefig(path)
+            plt.savefig(path, bbox_inches='tight')
             mlflow.log_artifact(path)
             plt.close()
+        except Exception as e:
+            logger.warning(f"SHAP summary plot failed: {e}")
+
 
         # ---------------- FEATURE IMPORTANCE ----------------
         importances = pd.Series(model.feature_importances_, index=X_train_scaled.columns)

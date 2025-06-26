@@ -1,5 +1,5 @@
 ARG BASE_IMAGE=python:3.11-slim
-FROM $BASE_IMAGE as runtime-environment
+FROM $BASE_IMAGE AS runtime-environment
 
 COPY requirements.txt /tmp/requirements.txt
 RUN apt-get update && apt-get install -y gcc build-essential && rm -rf /var/lib/apt/lists/*
