@@ -40,8 +40,8 @@ def register_pipelines() -> dict[str, Pipeline]:
     return {
         "__default__": (
             ingestion_pipeline
-            + data_expectations_pipeline
             + data_cleaning_pipeline
+            + data_expectations_pipeline
             + feature_engineering_pipeline
             + feature_store_pipeline          
             + split_data_pipeline
