@@ -29,8 +29,8 @@ def create_pipeline(**kwargs):
                 "X_test_preprocessed",
                 "y_train_encoded",
                 "y_test_encoded",
-                "parameters_model_selection",
-                "parameters_grid",
+                "params:parameters_model_selection",
+                "params:parameters_grid",
                 "final_selected_features"
             ],
             outputs=[
