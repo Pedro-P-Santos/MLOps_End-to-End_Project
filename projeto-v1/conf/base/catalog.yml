@@ -203,3 +203,7 @@ predictions_stats:
   type: json.JSONDataset
   filepath: data/07_model_output/predictions_stats.json
 
+## ------------------  data_drift pipe ------------------------
+results_drift: 
+  type: pickle.PickleDataSet
+  filepath: data/08_reporting/drift_report.pkl

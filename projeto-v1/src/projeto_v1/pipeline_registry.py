@@ -15,7 +15,8 @@ from projeto_v1.pipelines import (
     feature_selection,
     model_development_selection,
     model_train,
-    model_predict
+    model_predict,
+    data_drift
 )
 
 def register_pipelines() -> dict[str, Pipeline]:
@@ -36,6 +37,7 @@ def register_pipelines() -> dict[str, Pipeline]:
     model_development_selection_pipeline = model_development_selection.create_pipeline()
     model_train_pipeline = model_train.create_pipeline()
     model_predict_pipeline = model_predict.create_pipeline()
+    data_drift_pipeline = data_drift.create_pipeline()
 
     return {
         "__default__": (
@@ -49,7 +51,8 @@ def register_pipelines() -> dict[str, Pipeline]:
             + feature_selection_pipeline
             + model_development_selection_pipeline
             + model_train_pipeline              
-            + model_predict_pipeline            
+            + model_predict_pipeline
+            + data_drift_pipeline            
         ),
         "ingestion": ingestion_pipeline,
         "data_expectations": data_expectations_pipeline,
@@ -61,5 +64,6 @@ def register_pipelines() -> dict[str, Pipeline]:
         "feature_selection": feature_selection_pipeline,
         "model_development_selection": model_development_selection_pipeline,
         "model_train": model_train_pipeline,
-        "model_predict": model_predict_pipeline
+        "model_predict": model_predict_pipeline,
+        "data_drift": data_drift_pipeline
     }

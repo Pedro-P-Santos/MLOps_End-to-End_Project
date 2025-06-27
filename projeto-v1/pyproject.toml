@@ -54,9 +54,8 @@ example_pipeline = "False"
 source_dir = "src"
 
 [tool.pytest.ini_options]
-addopts = """
---cov-report term-missing \
---cov src/projeto_v1 -ra"""
+addopts = "--cov=src/projeto_v1 --cov-report=term-missing -ra"
+
 
 [tool.coverage.report]
 fail_under = 0
