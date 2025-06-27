@@ -8,7 +8,9 @@ from pathlib import Path
 import logging
 
 ### LOCATING config path ###
-conf_path = str(Path('') / settings.CONF_SOURCE)
+# conf_path = str(Path('') / settings.CONF_SOURCE)
+conf_path = str(Path(__file__).resolve().parents[4] / settings.CONF_SOURCE)
+
 
 ### Loading config file ###
 conf_loader = OmegaConfigLoader(conf_source=conf_path)
