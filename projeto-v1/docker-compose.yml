@@ -1,3 +1,44 @@
+# version: '3.8'
+
+# services:
+#   mlflow-server:
+#     image: ghcr.io/mlflow/mlflow:latest
+#     ports:
+#       - "8080:8080"
+#     environment:
+#       - MLFLOW_ARTIFACT_ROOT=/ml_artifacts
+#     volumes:
+#       - ./mlruns:/mlruns
+#       - ./ml_artifacts:/ml_artifacts
+#     command: >
+#       mlflow server
+#       --host 0.0.0.0
+#       --port 8080
+#       --backend-store-uri /mlruns
+#       --default-artifact-root /ml_artifacts
+
+#   kedro-pipeline:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile  
+#     environment:
+#       - MLFLOW_TRACKING_URI=http://mlflow-server:8080
+#       - MLFLOW_ARTIFACT_ROOT=/ml_artifacts
+#       - FS_API_KEY=${FS_API_KEY}
+#       - FS_PROJECT_NAME=${FS_PROJECT_NAME}
+#       - KEDRO_ENV=docker
+#     volumes:
+#       - ./data:/home/kedro_docker/data
+#       - ./ml_artifacts:/ml_artifacts
+#       - ./src:/home/kedro_docker/src
+#       - ./conf:/home/kedro_docker/conf    
+#     depends_on:
+#       - mlflow-server
+#     command: >
+#       kedro run --env docker
+
+
+
 version: '3.8'
 
 services:
@@ -7,15 +48,15 @@ services:
       - "8080:8080"
     environment:
       - MLFLOW_ARTIFACT_ROOT=/ml_artifacts
-    volumes:
-      - ./mlruns:/mlruns
-      - ./ml_artifacts:/ml_artifacts
     command: >
       mlflow server
       --host 0.0.0.0
       --port 8080
       --backend-store-uri /mlruns
       --default-artifact-root /ml_artifacts
+    volumes:
+      - mlruns:/mlruns
+      - ml_artifacts:/ml_artifacts
 
   kedro-pipeline:
     build:
@@ -26,23 +67,27 @@ services:
       - MLFLOW_ARTIFACT_ROOT=/ml_artifacts
       - FS_API_KEY=${FS_API_KEY}
       - FS_PROJECT_NAME=${FS_PROJECT_NAME}
+      - KEDRO_ENV=docker
     volumes:
       - ./data:/home/kedro_docker/data
-      - ./ml_artifacts:/ml_artifacts
       - ./src:/home/kedro_docker/src
-      - ./conf:/home/kedro_docker/conf    
+      - ./conf:/home/kedro_docker/conf
+      #only internally on Docker
+      - mlruns:/mlruns
+      - ml_artifacts:/ml_artifacts
     depends_on:
       - mlflow-server
     command: >
       kedro run --env docker
 
+volumes:
+  mlruns:
+  ml_artifacts:
 
-# ⚠️ O importante aqui é:
 
-# O MLflow está num container.
 
-# O Kedro está noutro.
+# se apagar o container as runs e artifacts depois desaparecem?
 
-# Ambos partilham os mesmos volumes para artefactos (./ml_artifacts) e histórico (./mlruns).
+# 🔒 Não, as runs e os artefactos não desaparecem quando apagas os containers — desde que uses volumes nomeados como estás a usar.
 
-# E comunicam entre si via http://mlflow-server:8080.
+# docker volume ls
