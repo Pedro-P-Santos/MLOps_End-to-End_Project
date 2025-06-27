@@ -140,16 +140,11 @@ def age_loan_interaction(df: pd.DataFrame) -> pd.DataFrame:
 def contacted_before(df: pd.DataFrame) -> pd.DataFrame:
     """
     Create a new feature indicating if the client has been contacted before.
-    
-    Parameters:
-    df (pd.DataFrame): Input DataFrame containing the data to be processed.
-    
-    Returns:
-    pd.DataFrame: DataFrame with the new feature added.
+    Assumes 'pdays' was cleaned: e.g., 999 -> -1.
     """
-    df["contacted_before"] = df["pdays"].apply(lambda x: 1 if x == 999 else 0)
-    assert 999 in df["pdays"].values
+    df["contacted_before"] = df["pdays"].apply(lambda x: 0 if x == -1 else 1)
     return df
+
 
 
 def employment_rate_interaction(df: pd.DataFrame) -> pd.DataFrame:

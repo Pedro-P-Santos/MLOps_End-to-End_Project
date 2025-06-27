@@ -11,7 +11,7 @@ def create_pipeline(**kwargs) -> Pipeline:
         [
             node(
                 func=run_feature_engineering,
-                inputs="validated_data",
+                inputs="cleaned_data",
                 outputs="data_engineered",  
                 name="data_engineering_node"
             ),
