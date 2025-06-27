@@ -15,7 +15,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                 func=model_predict,
                 inputs=["X_test_scaled", "trained_model", "final_selected_features"],
                 outputs=["predictions_df", "predictions_stats"],
-                name="train",
+                name="tests",
             ),
         ]
     )
