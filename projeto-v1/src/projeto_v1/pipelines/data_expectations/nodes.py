@@ -1,5 +1,8 @@
 import great_expectations as gx
-from great_expectations.core import ExpectationSuite, ExpectationConfiguration
+#from great_expectations.core import ExpectationSuite, ExpectationConfiguration
+from great_expectations.expectations.expectation_configuration import ExpectationConfiguration
+from great_expectations.core.expectation_suite import ExpectationSuite
+
 from great_expectations.data_context import get_context
 import pandas as pd
 import logging
