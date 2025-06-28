@@ -8,32 +8,49 @@ in the official documentation:
 https://docs.pytest.org/en/latest/getting-started.html
 """
 import pandas as pd
+import numpy as np
 import yaml
 from pathlib import Path
+
 from src.projeto_v1.pipelines.data_cleaning.nodes import clean_bank_data
+from src.projeto_v1.pipelines.data_cleaning.pipeline import create_pipeline
 
-with open("conf/base/parameters_data_cleaning.yml", "r") as f:
-    parameters = yaml.safe_load(f)["clean_data"]
+def test_clean_bank_data_with_project_config():
+    # Load cleaning config from parameters.yml
+    config_path = Path("conf/base/parameters.yml")
+    with config_path.open("r") as file:
+        parameters = yaml.safe_load(file)
+    config = parameters["data_cleaning_config"]
 
-df_0 = pd.read_csv(Path("data/02_intermediate/cleaned_data.csv"))
+    # Create dummy DataFrame with duplicate, 999 in 'pdays', numeric + categorical columns
+    df = pd.DataFrame({
+        "age": [30, 30, 40],
+        "duration": [1000.0, 1000.0, 1500.5],
+        "pdays": [999, 999, 5],
+        "job": ["admin.", "admin.", "unknown"],
+        "y": ["yes", "yes", "no"]
+    })
 
-def test_clean_removes_duplicates():
-    """Test that duplicates are removed if enabled."""
-    df = pd.concat([df_0, df_0.iloc[0:1]])  # Add a duplicate
-    cleaned = clean_bank_data(df, parameters)
-    assert cleaned.shape[0] == df_0.shape[0], "Duplicates were not removed"
+    cleaned_df = clean_bank_data(df, config)
 
-def test_clean_replaces_999_pdays():
-    """Test that 999 in pdays is replaced with the missing value placeholder."""
-    df = df_0.copy()
-    df.loc[0, "pdays"] = 999
-    cleaned = clean_bank_data(df, parameters)
-    assert cleaned["pdays"].iloc[0] == parameters["pdays_missing_value"], "999 was not replaced"
+    # Expect duplicate removal
+    assert cleaned_df.shape[0] == 2
 
-def test_numeric_columns_downcasted():
-    """Test that numeric columns are downcasted to save memory."""
-    df = df_0.copy()
-    cleaned = clean_bank_data(df, parameters)
-    int_cols = cleaned.select_dtypes(include=["int32"]).columns
-    float_cols = cleaned.select_dtypes(include=["float32"]).columns
-    assert len(int_cols) > 0 or len(float_cols) > 0, "Numeric columns were not downcasted"
+    # Expect pdays 999 to be replaced with config value
+    assert config["pdays_missing_value"] in cleaned_df["pdays"].values
+    assert 999 not in cleaned_df["pdays"].values
+
+    # Expect numeric downcast
+    assert cleaned_df["age"].dtype.name.startswith("int")
+    assert cleaned_df["duration"].dtype.name.startswith("float")
+
+    # 'unknown' should not be removed from categorical columns
+    assert "unknown" in cleaned_df["job"].values
+
+    # Check no column was dropped
+    assert set(cleaned_df.columns) == {"age", "duration", "pdays", "job", "y"}
+
+    # Check pipeline node metadata
+    pipeline = create_pipeline()
+    assert pipeline.nodes
+    assert pipeline.nodes[0].name == "clean_bank_data_node"

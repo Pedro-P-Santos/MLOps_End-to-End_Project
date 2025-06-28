@@ -8,19 +8,19 @@ in the official documentation:
 https://docs.pytest.org/en/latest/getting-started.html
 """
 import pandas as pd
-from pathlib import Path
-from src.projeto_v1.pipelines.data_expectations.nodes import validate_data
+from src.projeto_v1.pipelines.data_expectations.nodes import build_custom_expectations_for_rawdata
+from src.projeto_v1.pipelines.data_expectations.pipeline import create_pipeline
 
-df = pd.read_csv(Path("data/02_intermediate/ingested_data.csv"))
+def test_build_custom_expectations_for_rawdata():
+    df = pd.read_csv("data/02_intermediate/ingested_data.csv")
 
-def test_validated_data_is_dataframe():
-    result = validate_data(df)
-    assert isinstance(result, pd.DataFrame), "Validation should return a DataFrame"
-
-def test_validated_data_has_no_nulls():
-    result = validate_data(df)
-    assert not result.isnull().values.any(), "Validated data contains nulls"
-
-def test_validated_data_contains_target_column():
-    result = validate_data(df)
-    assert "y" in result.columns, "Validated data missing target column 'y'"
+    result = build_custom_expectations_for_rawdata(df)
+    assert isinstance(result, pd.DataFrame)
+    assert result.shape == (41188, 21)
+    assert result["y"].nunique() == 2
+    assert result["pdays"].mode().iloc[0] == 999
+    assert 25 <= result["age"].mode().iloc[0] <= 35
+    
+    pipeline = create_pipeline()
+    assert pipeline.nodes
+    assert pipeline.nodes[0].name == "data_expectations_raw_node"
