@@ -117,7 +117,7 @@ def run_all_feature_selection_methods(X_train_preprocessed: pd.DataFrame, y_trai
 
 def feature_selection_rfe(X: pd.DataFrame, y: pd.Series, params: Dict[str, Any]) -> List[str]:
     logger = logging.getLogger(__name__)
-    logger.info("🔍 Starting RFE with XGBoost over all feature sizes")
+    logger.info("Starting RFE with XGBoost over all feature sizes")
 
     model_params = params["model_params_xgb"]
     y = np.ravel(y)
@@ -159,9 +159,9 @@ def feature_selection_rfe(X: pd.DataFrame, y: pd.Series, params: Dict[str, Any])
             best_score = val_f1
             best_features_rfe = rfe_selected_features
             best_n_features = n
-            logger.info(f"✅ New best model with {n} features")
+            logger.info(f"New best model with {n} features")
 
-    logger.info(f"🎯 Best validation F1: {best_score:.4f} using {best_n_features} features")
+    logger.info(f"Best validation F1: {best_score:.4f} using {best_n_features} features")
     logger.info(f"Selected features: {best_features_rfe}")
     assert isinstance(best_features_rfe, list), "Selected features should be a list"
 
@@ -241,7 +241,7 @@ def feature_selection_chi2(X: pd.DataFrame, y: pd.Series, params: Dict) -> List[
     selected = chi2_results[chi2_results["p_value"] < significance_threshold]
     selected_features_chi2 = selected["feature"].tolist()
 
-    logger.info(f"✅ Chi-squared selected {len(selected_features_chi2)} features with p < {significance_threshold}: {selected_features_chi2}")
+    logger.info(f"Chi-squared selected {len(selected_features_chi2)} features with p < {significance_threshold}: {selected_features_chi2}")
 
     assert isinstance(selected_features_chi2, list), "Selected features should be a list"
     return selected_features_chi2

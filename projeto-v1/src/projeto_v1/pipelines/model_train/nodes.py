@@ -152,9 +152,7 @@ def model_train(
             shap_values = explainer(X_sample)
             values = shap_values.values
 
-            # Corrigir casos 2D vs 3D
             if values.ndim == 3:
-                # multiclasse, pegar explicações da classe 1 por exemplo
                 values = values[:, :, 1]
 
             shap.initjs()
