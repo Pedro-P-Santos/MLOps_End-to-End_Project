@@ -1,0 +1,60 @@
+{
+  "dataframe_split": {
+    "columns": [
+      "marital",
+      "poutcome",
+      "age_binned_quantile",
+      "previous_bin",
+      "cpi_top_value",
+      "euribor_bin",
+      "education_mapped"
+    ],
+    "data": [
+      [
+        "married",
+        "nonexistent",
+        0.0,
+        0,
+        "93.918",
+        "high",
+        "basic_education"
+      ],
+      [
+        "single",
+        "nonexistent",
+        4.0,
+        0,
+        "other",
+        "high",
+        "higher_education"
+      ],
+      [
+        "single",
+        "nonexistent",
+        0.0,
+        0,
+        "other",
+        "very_high",
+        "higher_education"
+      ],
+      [
+        "single",
+        "nonexistent",
+        2.0,
+        0,
+        "93.994",
+        "high",
+        "higher_education"
+      ],
+      [
+        "single",
+        "nonexistent",
+        2.0,
+        0,
+        "92.893",
+        "very_low",
+        "high_school"
+      ]
+    ]
+  }
+}

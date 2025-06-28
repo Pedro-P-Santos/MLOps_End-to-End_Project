@@ -1,0 +1,30 @@
+artifact_path: model
+flavors:
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+is_signature_from_type_hint: false
+mlflow_version: 2.21.0
+model_size_bytes: 3038
+model_uuid: aead692fb6cc4bd597336cc2ab182b74
+prompts: null
+run_id: 3e9bd5de09d141d9848f9f93f36288a3
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "string", "name": "marital", "required": true}, {"type": "string",
+    "name": "poutcome", "required": true}, {"type": "double", "name": "age_binned_quantile",
+    "required": true}, {"type": "long", "name": "previous_bin", "required": true},
+    {"type": "string", "name": "cpi_top_value", "required": true}, {"type": "string",
+    "name": "euribor_bin", "required": true}, {"type": "string", "name": "education_mapped",
+    "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1,
+    28]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-06-28 16:34:29.705796'

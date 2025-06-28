@@ -1,0 +1,35 @@
+artifact_path: model
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.11.9
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+is_signature_from_type_hint: false
+mlflow_version: 2.21.0
+model_size_bytes: 2588
+model_uuid: 5ddd3f0d0801490180681a738de4b7e7
+prompts: null
+run_id: 2a6fb5e475d0450fa7e68445df7f14cc
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "double", "name": "age", "required": true}, {"type": "double",
+    "name": "balance", "required": true}, {"type": "double", "name": "duration", "required":
+    true}, {"type": "double", "name": "job_admin", "required": true}, {"type": "double",
+    "name": "job_unknown", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-06-28 16:59:32.536488'

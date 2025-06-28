@@ -45,7 +45,7 @@ def register_pipelines() -> dict[str, Pipeline]:
             + data_expectations_pipeline
             + data_cleaning_pipeline
             + feature_engineering_pipeline
-            #+ feature_store_pipeline          
+            + feature_store_pipeline          
             + split_data_pipeline
             + basic_pre_processing_pipeline
             + feature_selection_pipeline
