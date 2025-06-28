@@ -1,5 +1,0 @@
-#tive de correr PS C:\Users\rodri> $env:FS_API_KEY = "xxx-xxx-xxx"
-
-credentials:
-  FS_API_KEY: null
-  FS_PROJECT_NAME: null

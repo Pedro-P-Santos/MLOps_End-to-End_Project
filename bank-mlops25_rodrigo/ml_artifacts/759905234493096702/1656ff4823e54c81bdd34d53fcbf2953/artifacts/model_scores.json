@@ -1,7 +1,0 @@
-{
-  "RandomForest": 0.9093226511289147,
-  "LogisticRegression": 0.910536537994659,
-  "GradientBoosting": 0.9189123573682932,
-  "KNN": 0.9020393299344501,
-  "XGBoost": 0.9153920854576354
-}
