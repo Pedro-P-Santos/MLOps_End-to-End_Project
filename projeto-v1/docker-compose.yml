@@ -43,10 +43,3 @@ volumes:
   mlruns:
   ml_artifacts:
 
-
-
-# se apagar o container as runs e artifacts depois desaparecem?
-
-# 🔒 Não, as runs e os artefactos não desaparecem quando apagas os containers — desde que uses volumes nomeados como estás a usar.
-
-# docker volume ls
