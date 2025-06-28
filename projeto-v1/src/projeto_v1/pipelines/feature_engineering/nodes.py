@@ -136,7 +136,6 @@ def age_loan_interaction(df: pd.DataFrame) -> pd.DataFrame:
     df["senior_loan"] = ((df["age"] > 50) & (df["loan"] == "yes")).astype(int)
     return df
 
-# A AVALIAR CORRECTAMENTE APOS MUDANCS NA PIPELINE DATA CLEANING
 def contacted_before(df: pd.DataFrame) -> pd.DataFrame:
     """
     Create a new feature indicating if the client has been contacted before.
@@ -177,37 +176,12 @@ def add_loan_risk_features(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-# def add_contact_timing_features(df: pd.DataFrame) -> pd.DataFrame:
-#     """Features relacionadas com o momento do contacto (mês, trimestre, dia da semana)."""
-#     month_map = {
-#         'jan': 1, 'feb': 2, 'mar': 3, 'apr': 4,
-#         'may': 5, 'jun': 6, 'jul': 7, 'aug': 8,
-#         'sep': 9, 'oct': 10, 'nov': 11, 'dec': 12
-#     }
-#     df["contact_month_num"] = df["month"].map(month_map)
-    
-#     df["is_summer_contact"] = df["month"].isin(["jun", "jul", "aug"]).astype(int)
-    
-#     df["contact_day_priority"] = (df["day_of_week"] == "fri").astype(int)
-    
-#     df["contact_month_quarter"] = pd.cut(
-#         df["contact_month_num"],
-#         bins=[0, 3, 6, 9, 12],
-#         labels=["Q1", "Q2", "Q3", "Q4"]
-#     ).astype(str)
-    
-#     return df
-
 def add_customer_profile_features(df: pd.DataFrame) -> pd.DataFrame:
     """Features relacionadas com o perfil sociodemográfico e histórico de contacto do cliente."""
     
     df["is_student_or_retired"] = df["job"].isin(["student", "retired"]).astype(int)
     
-    # Sucesso em campanha anterior
     df["successful_prev_contact"] = (df["poutcome"] == "success").astype(int)
-    
-    # # Duração média por contacto (evitar divisão por zero)
-    # df["contact_efficiency"] = df["duration"] / (df["campaign"] + 1e-6)
     
     return df
 
@@ -215,10 +189,8 @@ def add_customer_profile_features(df: pd.DataFrame) -> pd.DataFrame:
 def add_macro_and_combo_features(df: pd.DataFrame) -> pd.DataFrame:
     """Features sintéticas baseadas em condições económicas e combinações demográficas."""
     
-    # Índice sintético de pessimismo e pressão económica
     df["economic_pressure_index"] = -df["cons.conf.idx"] + df["cons.price.idx"]
     
-    # Combinação entre estado civil e educação
     df["marital_edu_combo"] = df["marital"] + "_" + df["education"]
     
     return df
