@@ -6,7 +6,7 @@ from sklearn.decomposition import PCA
 import numpy as np
 import logging
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(_name_)
 
 
 ####### UTILS
@@ -148,11 +148,10 @@ def create_drifted_df(train):
     drifted["emp.var.rate"] += train["emp.var.rate"].std()
 
     # binary feature but consider feature values scaled
-    drifted["poutcome_success"] = np.random.choice([ -0.184965, 5.406418], size=len(drifted))
+    unique_scaled_values = train["poutcome_success"].unique()
+    drifted["poutcome_success"] = np.random.choice(unique_scaled_values, size=len(drifted))
 
     less_common_values = np.random.choice(train["nr.employed"].unique(), size=len(drifted))
     drifted["nr.employed"] = less_common_values 
 
     return drifted
-
-
