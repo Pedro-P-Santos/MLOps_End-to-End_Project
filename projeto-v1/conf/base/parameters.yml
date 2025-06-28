@@ -88,3 +88,15 @@ parameters_model_train:
   experiment_name_train: "Champion-Model: Training"
   random_state_train: 2021
   model_registry_name_train: bank_churn_model_CHAMPION
+
+
+# --------------------------- DATA DRIFT PIPELINE -------------------------
+
+feature_columns:
+  - age
+  - nr.employed
+  - emp.var.rate
+  - campaign
+
+psi_report_path_serving: data/08_reporting/psi_report_serving.html
+psi_report_path_drifted: data/08_reporting/psi_report_drifted.html

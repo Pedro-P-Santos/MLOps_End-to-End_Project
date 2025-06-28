@@ -1,0 +1,69 @@
+artifact_path: model
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.11.0
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+is_signature_from_type_hint: false
+mlflow_version: 2.21.0
+model_size_bytes: 85101830
+model_uuid: 7e073e9faf3747d9a593862f3a7ce4d2
+prompts: null
+run_id: 52602292b7f6456abcfc955ded161615
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "double", "name": "is_student_or_retired", "required": true},
+    {"type": "double", "name": "cpi_top_value_92.893", "required": true}, {"type":
+    "double", "name": "poutcome_success", "required": true}, {"type": "double", "name":
+    "cci_top_value", "required": true}, {"type": "double", "name": "marital_single",
+    "required": true}, {"type": "double", "name": "previous_bin_1", "required": true},
+    {"type": "double", "name": "age", "required": true}, {"type": "double", "name":
+    "age_binned_quantile_0.0", "required": true}, {"type": "double", "name": "education_mapped_basic_education",
+    "required": true}, {"type": "double", "name": "poutcome_nonexistent", "required":
+    true}, {"type": "double", "name": "middle_aged_housing_loan", "required": true},
+    {"type": "double", "name": "previous_bin_0", "required": true}, {"type": "double",
+    "name": "previous", "required": true}, {"type": "double", "name": "euribor_bin_high",
+    "required": true}, {"type": "double", "name": "emp.var.rate", "required": true},
+    {"type": "double", "name": "age_binned_quantile_4.0", "required": true}, {"type":
+    "double", "name": "cpi_top_value_93.994", "required": true}, {"type": "double",
+    "name": "cpi_top_value_93.918", "required": true}, {"type": "double", "name":
+    "euribor_bin_very_high", "required": true}, {"type": "double", "name": "loan_risk_score",
+    "required": true}, {"type": "double", "name": "nr.employed", "required": true},
+    {"type": "double", "name": "education_mapped_higher_education", "required": true},
+    {"type": "double", "name": "cons.conf.idx", "required": true}, {"type": "double",
+    "name": "pdays", "required": true}, {"type": "double", "name": "successful_prev_contact",
+    "required": true}, {"type": "double", "name": "senior_loan", "required": true},
+    {"type": "double", "name": "age_binned_quantile_2.0", "required": true}, {"type":
+    "double", "name": "senior_housing_loan", "required": true}, {"type": "double",
+    "name": "cci_above_75th", "required": true}, {"type": "double", "name": "young_housing_loan",
+    "required": true}, {"type": "double", "name": "euribor_bin_very_low", "required":
+    true}, {"type": "double", "name": "young_loan", "required": true}, {"type": "double",
+    "name": "middle_aged_loan", "required": true}, {"type": "double", "name": "contacted_before",
+    "required": true}, {"type": "double", "name": "default", "required": true}, {"type":
+    "double", "name": "euribor_bin_low", "required": true}, {"type": "double", "name":
+    "age_binned_quantile_3.0", "required": true}, {"type": "double", "name": "campaign",
+    "required": true}, {"type": "double", "name": "cpi_above_75th", "required": true},
+    {"type": "double", "name": "previous_bin_3", "required": true}, {"type": "double",
+    "name": "poutcome_failure", "required": true}, {"type": "double", "name": "marital_married",
+    "required": true}, {"type": "double", "name": "euribor3m", "required": true},
+    {"type": "double", "name": "economic_pressure_index", "required": true}, {"type":
+    "double", "name": "previous_bin_2", "required": true}, {"type": "double", "name":
+    "cons.price.idx", "required": true}, {"type": "double", "name": "cpi_top_value_other",
+    "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-06-28 09:30:38.930282'

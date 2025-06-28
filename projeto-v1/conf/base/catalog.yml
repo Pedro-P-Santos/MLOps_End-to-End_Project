@@ -141,5 +141,5 @@ predictions_stats:
 
 ## ------------------  data_drift pipe ------------------------
 results_drift: 
-  type: pickle.PickleDataSet
+  type: pickle.PickleDataset
   filepath: data/08_reporting/drift_report.pkl

@@ -154,3 +154,5 @@ def create_drifted_df(train):
     drifted["nr.employed"] = less_common_values 
 
     return drifted
+
+

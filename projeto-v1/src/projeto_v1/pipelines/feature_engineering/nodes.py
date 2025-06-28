@@ -164,13 +164,6 @@ def employment_rate_interaction(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-#-------------------------------------------
-#-------------------------------------------
-#-------------------------------------------
-#-----------------Rodrigo-------------------
-#-------------------------------------------
-#-------------------------------------------
-#-------------------------------------------
 
 def add_loan_risk_features(df: pd.DataFrame) -> pd.DataFrame:
     """Features relacionadas com risco financeiro e histórico de crédito."""

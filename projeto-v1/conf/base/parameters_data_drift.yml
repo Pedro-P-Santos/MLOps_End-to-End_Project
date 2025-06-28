@@ -4,11 +4,11 @@
 # Documentation for this file format can be found in "Parameters"
 # Link: https://docs.kedro.org/en/0.19.5/configuration/parameters.html
 
-feature_columns:
-  - age
-  - nr.employed
-  - emp.var.rate
-  - campaign
+# feature_columns:
+#   - age
+#   - nr.employed
+#   - emp.var.rate
+#   - campaign
 
-psi_report_path_serving: data/08_reporting/psi_report_serving.html
-psi_report_path_drifted: data/08_reporting/psi_report_drifted.html
+# psi_report_path_serving: data/08_reporting/psi_report_serving.html
+# psi_report_path_drifted: data/08_reporting/psi_report_drifted.html
