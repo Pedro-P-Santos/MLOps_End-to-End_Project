@@ -7,7 +7,6 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.base import BaseEstimator, TransformerMixin
 
-# Frequency encoder simples
 class FrequencyEncoder(BaseEstimator, TransformerMixin):
     def __init__(self):
         self.freqs_ = {}
@@ -24,7 +23,7 @@ class FrequencyEncoder(BaseEstimator, TransformerMixin):
         X_enc = X.copy()
         for col in X.columns:
             X_enc[col] = X[col].map(self.freqs_[col]).fillna(0)
-        return X_enc.values  # para compatibilidade com ColumnTransformer
+        return X_enc.values  
 
 def preprocess_train_test(X_train: pd.DataFrame, X_test: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
     categorical_high_cardinality = [
