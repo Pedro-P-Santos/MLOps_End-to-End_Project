@@ -2,6 +2,7 @@
 #
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://docs.kedro.org/en/stable/data/data_catalog.html
+
 bank_data:
   type: pandas.CSVDataset
   filepath: data/01_raw/bank-additional-full.csv
@@ -65,36 +66,10 @@ y_test_encoded:
 
 
 # ## ------------------ feature_selection pipe ------------------------
-# params:parameters_feature_selection:
+# parameters_feature_selection:
 #   type: kedro.extras.datasets.api.YAMLDataSet
 #   filepath: base/parameters_feature_selection.yml
 
-#----------------Pedro-----------------
-#--------------------------------------
-# rfe_selected_features:
-#   type: pickle.PickleDataSet
-#   filepath: data/04_feature/rfe_selected_features.pkl
-
-# chi2_selected_features:
-#   type: pickle.PickleDataSet
-#   filepath: data/04_feature/chi2_selected_features.pkl
-
-# boruta_selected_features:
-#   type: pickle.PickleDataSet
-#   filepath: data/04_feature/boruta_selected_features.pkl
-
-# variance_threshold_selected_features:
-#   type: pickle.PickleDataSet
-#   filepath: data/04_feature/variance_threshold_selected_features.pkl
-
-# ## final set of selected features
-# final_selected_features:
-#   type: pickle.PickleDataset
-#   filepath: data/04_feature/final_selected_features.pkl
-#   backend: pickle
-
-#----------------Rodrigo-----------------
-#----------------------------------------
 rfe_selected_features:
   type: pickle.PickleDataset
   filepath: data/04_feature/rfe_selected_features.pkl
@@ -119,56 +94,17 @@ final_selected_features:
 
 ## ------------------  model_development_selection pipe ------------------------
 
-# parameters_model_selection:
-#   type: yaml.YAMLDataset
-#   filepath: conf/base/parameters_model_selection.yml
-
-# # champion_model:
-# #   type: pickle.PickleDataset
-# #   filepath: data/06_models/champion_model.pkl
-
-# # champion_metrics:
-# #   type: pandas.CSVDataset
-# #   filepath: data/07_model_output/champion_metrics.csv
-# champion_model:
-#   type: pickle.PickleDataset
-#   filepath: data/06_models/champion_model.pkl
-
-# champion_metrics:
-#   type: pandas.CSVDataset
-#   filepath: data/07_model_output/champion_metrics.csv
-
-# champion_tags:
-#   type: MemoryDataset
-
-# champion_description:
-#   type: MemoryDataset
-
-
-# parameters_grid:
-#   type: yaml.YAMLDataset
-#   filepath: conf/base/parameters_grid.yml
-
-# X_train_scaled:
-#   type: pandas.CSVDataset
-#   filepath: data/05_model_input/X_train_scaled.csv
-
-# X_test_scaled:
-#   type: pandas.CSVDataset
-#   filepath: data/05_model_input/X_test_scaled.csv
-
 champion_model:
   type: pickle.PickleDataset
   filepath: data/06_models/champion_model.pkl
 
-parameters_model_selection:
-  type: yaml.YAMLDataset
-  filepath: conf/base/parameters_model_selection.yml
+# parameters_model_selection:
+#   type: yaml.YAMLDataset
+#   filepath: conf/base/parameters_model_selection.yml
 
-parameters_grid:
-  type: yaml.YAMLDataset
-  filepath: conf/base/parameters_grid.yml
-
+# parameters_grid:
+#   type: yaml.YAMLDataset
+#   filepath: conf/base/parameters_grid.yml
 
 X_train_scaled:
   type: pandas.CSVDataset
@@ -184,9 +120,9 @@ champion_results:
   type: json.JSONDataset
   filepath: data/08_reporting/champion_results.json
 
-parameters_model_train:
-  type: yaml.YAMLDataset
-  filepath: conf/base/parameters_model_train.yml
+# parameters_model_train:
+#   type: yaml.YAMLDataset
+#   filepath: conf/base/parameters_model_train.yml
 
 trained_model:
   type: pickle.PickleDataset

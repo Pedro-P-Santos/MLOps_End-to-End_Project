@@ -15,7 +15,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                 "X_test_scaled",
                 "y_train_encoded",
                 "y_test_encoded",
-                "parameters_model_train",
+                "params:parameters_model_train",
                 "final_selected_features"
             ],
             outputs=["trained_model", "champion_results"],

@@ -1,6 +1,15 @@
+# ------------------------- DATA CLEANING PIPELINE -------------------------
+
+data_cleaning_config:
+  drop_duplicates: True
+  pdays_missing_value: -1
+
+
+# --------------------- FEATURE SELECTION PIPELINE ------------------------
 
 parameters_feature_selection:
-  # xgb
+
+  # XGBoost
   model_params_xgb:
     n_estimators: 50
     max_depth: 4
@@ -10,9 +19,7 @@ parameters_feature_selection:
     use_label_encoder: False
     eval_metric: mlogloss
 
-
-
-  # BORUTA
+  # Boruta
   model_params_boruta:
     n_estimators: 50
     max_depth: 4
@@ -21,13 +28,63 @@ parameters_feature_selection:
     n_jobs: -1
   max_iter_boruta: 100
 
-
-  # CHI2
-  k_features_chi2: 20
+  # Chi-squared
   model_params_chi2:
     n_jobs: -1
     random_state: 42
+  k_features_chi2: 20
   chi2_p_value_threshold: 0.001
 
-  # VARIANCE THRESHOLD
+  # Variance Threshold
   variance_threshold: 0
+
+
+# ------------- MODEL DEVELOPMENT & SELECTION PIPELINE --------------------
+
+parameters_model_selection:
+  run_name: "Model_Selection: OPTUNA"
+  random_state: 2021
+  model_registry_name: bank_churn_model_best_optuna
+  mlflow_experiment_name: "models"
+
+parameters_grid:
+  hyperparameters:
+
+    RandomForestClassifier:
+      n_estimators: [100, 200, 300]
+      max_depth: [5, 6, 7, 8]
+      random_state: [2021]
+
+    XGBClassifier:
+      n_estimators: [100, 200, 300]
+      max_depth: [4, 5, 6, 7]
+      learning_rate: [0.05, 0.1, 0.01]
+      random_state: [2021]
+      use_label_encoder: [False]
+      eval_metric: ["logloss"]
+
+    GradientBoostingClassifier:
+      n_estimators: [100, 200, 300]
+      max_depth: [4, 5, 6, 7]
+      learning_rate: [0.05, 0.1, 0.01]
+      random_state: [2021]
+
+    LogisticRegression:
+      penalty: ["l2"]
+      C: [0.1, 1.0, 10.0]
+      solver: ["liblinear"]
+      max_iter: [100]
+
+    KNeighborsClassifier:
+      n_neighbors: [3, 5, 7]
+      weights: ["uniform", "distance"]
+      metric: ["minkowski"]
+
+
+# ------------------------ MODEL TRAINING PIPELINE ------------------------
+
+parameters_model_train:
+  run_name_train: "Model_train: Champion"
+  experiment_name_train: "Champion-Model: Training"
+  random_state_train: 2021
+  model_registry_name_train: bank_churn_model_CHAMPION
