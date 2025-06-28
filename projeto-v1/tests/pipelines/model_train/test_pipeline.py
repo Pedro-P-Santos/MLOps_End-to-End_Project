@@ -15,6 +15,7 @@ from unittest import mock
 from sklearn.ensemble import RandomForestClassifier
 
 from src.model_train.nodes import model_train
+from src.model_train.pipeline import create_pipeline
 
 def test_model_train_mock_mlflow():
     # Setup environment variable for config loading
@@ -93,5 +94,9 @@ def test_model_train_mock_mlflow():
     for metric in ["F1_Macro-Train", "F1_Macro-Test", "Recall-Train", "Recall-Test", "Precision-Train", "Precision-Test", "F1_DIFF"]:
         assert metric in results
         assert isinstance(results[metric], float)
+
+    pipeline = create_pipeline()
+    assert pipeline.nodes
+    assert pipeline.nodes[0].name == "train_champion_model"
 
     print("Test passed: model_train works with mocked MLflow calls.")
