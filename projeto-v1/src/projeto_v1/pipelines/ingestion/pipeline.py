@@ -6,8 +6,8 @@ def create_pipeline(**kwargs) -> Pipeline:
         [
             node(
                 func=ingestion,
-                inputs="bank_data",        # This comes from catalog.yml
-                outputs="ingested_data",        # What you save next
+                inputs="bank_data",        
+                outputs="ingested_data",        
                 name="ingestion_node"
             )
         ]

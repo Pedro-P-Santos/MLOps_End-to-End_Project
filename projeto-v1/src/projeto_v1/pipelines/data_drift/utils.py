@@ -47,36 +47,6 @@ def psi_report(train_df, serving_df, report_path="data/08_reporting/psi_report.h
     return {"status": "Report saved", "path": report_path}
 
 
-def fisher_test_binary_feature(train_df, serving_df, column_name):
-    train_counts = train_df[column_name].value_counts().sort_index()
-    serving_counts = serving_df[column_name].value_counts().sort_index()
-
-    contingency_table = pd.DataFrame({
-        "Train": train_counts,
-        "Serving": serving_counts
-    })
-
-    table = contingency_table.values
-    oddsratio, p_value = fisher_exact(table)
-
-    logger.info(f"Fisher's Exact Test for '{column_name}'")
-    logger.info("\n%s", contingency_table)
-    logger.info(f"Odds Ratio: {oddsratio:.4f}")
-    logger.info(f"p-value: {p_value:.4f}")
-
-    if p_value > 0.05:
-        interpretation = "Fail to reject null hypothesis: No significant drift detected."
-    else:
-        interpretation = "Reject null hypothesis: Significant drift detected."
-
-    logger.info(f"Interpretation: {interpretation}")
-
-    return {
-        "p_value": p_value,
-        "odds_ratio": oddsratio,
-        "contingency_table": contingency_table
-    }
-
 def fisher_test_target(y_train,y_test):
     y_train_counts = y_train.value_counts().sort_index()
     y_test_counts = y_test.value_counts().sort_index()

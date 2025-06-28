@@ -66,9 +66,6 @@ y_test_encoded:
 
 
 # ## ------------------ feature_selection pipe ------------------------
-# parameters_feature_selection:
-#   type: kedro.extras.datasets.api.YAMLDataSet
-#   filepath: base/parameters_feature_selection.yml
 
 rfe_selected_features:
   type: pickle.PickleDataset
@@ -98,14 +95,6 @@ champion_model:
   type: pickle.PickleDataset
   filepath: data/06_models/champion_model.pkl
 
-# parameters_model_selection:
-#   type: yaml.YAMLDataset
-#   filepath: conf/base/parameters_model_selection.yml
-
-# parameters_grid:
-#   type: yaml.YAMLDataset
-#   filepath: conf/base/parameters_grid.yml
-
 X_train_scaled:
   type: pandas.CSVDataset
   filepath: data/05_model_input/X_train_scaled.csv
@@ -119,10 +108,6 @@ X_test_scaled:
 champion_results:
   type: json.JSONDataset
   filepath: data/08_reporting/champion_results.json
-
-# parameters_model_train:
-#   type: yaml.YAMLDataset
-#   filepath: conf/base/parameters_model_train.yml
 
 trained_model:
   type: pickle.PickleDataset

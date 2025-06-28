@@ -19,7 +19,6 @@ import numpy as np
 from .utils import (
     ks_test,
     psi_report,
-    fisher_test_binary_feature,
     fisher_test_target,
     pca_reconstruction_error,
     create_drifted_df,
@@ -44,7 +43,6 @@ def run_all_drift_checks(
 
     ks_serving = ks_test(train_df, serving_df, feature_columns)
     psi_serving = psi_report(train_df, serving_df, report_path=psi_report_path_serving)
-    fisher_binary_serving = fisher_test_binary_feature(train_df, serving_df, "poutcome_success")
     fisher_target_serving = fisher_test_target(y_train, y_serving)
     pca_serving = pca_reconstruction_error(train_df, serving_df)
 #####
@@ -55,28 +53,21 @@ def run_all_drift_checks(
 
     ks_drifted = ks_test(train_df, drifted_df, feature_columns)
     psi_drifted = psi_report(train_df, drifted_df, report_path=psi_report_path_drifted)
-    fisher_binary_drifted = fisher_test_binary_feature(train_df, drifted_df, "poutcome_success")
     pca_drifted = pca_reconstruction_error(train_df, drifted_df)
 
     results = {
         "serving": {
             "ks": ks_serving,
             "psi": psi_serving,
-            "fisher_binary": fisher_binary_serving,
             "fisher_target": fisher_target_serving,
             "pca": pca_serving
         },
         "drifted": {
             "ks": ks_drifted,
             "psi": psi_drifted,
-            "fisher_binary": fisher_binary_drifted,
             "pca": pca_drifted
         }
     }
 
     logger.info("Drift analysis complete")
     return results
-
-
-
-

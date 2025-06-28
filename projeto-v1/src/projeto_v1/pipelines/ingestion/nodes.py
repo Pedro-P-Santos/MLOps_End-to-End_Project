@@ -37,6 +37,6 @@ def ingestion(bank_df: pd.DataFrame) -> pd.DataFrame:
 
     assert bank_df["y"].nunique() == 2, "Target variable 'y' must have 2 unique values"
 
-    logger.info(f"✅ Dataset loaded with {bank_df.shape[0]} rows and {bank_df.shape[1]} columns")
+    logger.info(f"Dataset loaded with {bank_df.shape[0]} rows and {bank_df.shape[1]} columns")
 
     return bank_df
